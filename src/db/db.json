@@ -1,0 +1,58 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "title": "台灣綠茶",
+      "price": 45,
+      "description": "精選台灣在地綠茶，香氣層次豐富，自然回甘，是清爽無負擔的輕鬆茶飲！",
+      "category": "茶系列",
+      "image": "https://picsum.photos/seed/台灣在地綠茶/300/300",
+      "sales": 1
+    },
+    {
+      "id": "2",
+      "title": "錫蘭紅茶",
+      "price": 25,
+      "description": "產自斯里蘭卡的錫蘭紅茶，為世界最暢銷的茶飲之一，茶香宜人、口感自然回甘！",
+      "category": "茶系列",
+      "image": "https://picsum.photos/seed/錫蘭紅茶/300/300",
+      "sales": 2
+    },
+    {
+      "id": "3",
+      "title": "風味奶茶",
+      "price": 25,
+      "description": "清香的紅茶與香醇的鮮奶結合，可加入各款特殊風味的糖漿帶來幸福感!!",
+      "category": "茶系列",
+      "image": "https://picsum.photos/seed/風味奶茶/300/300",
+      "sales": 3
+    },
+    {
+      "id": "4",
+      "title": "焦糖瑪奇朵",
+      "price": 25,
+      "description": "綿密細緻的奶泡淋上濃郁甜蜜的焦糖醬，襯托出牛奶的甜與咖啡的香，一口一口沿著杯緣品嘗焦糖瑪奇朵，享受最幸福經典的滋味。",
+      "category": "咖啡系列",
+      "image": "https://picsum.photos/seed/焦糖瑪奇朵/300/300",
+      "sales": 4
+    },
+    {
+      "id": "5",
+      "title": "花式摩卡",
+      "price": 25,
+      "description": "濃濃的巧克力與豐郁的咖啡及滑順的鮮奶調和，杯口擠上冷冽細緻的鮮奶油和巧克力醬，口感濃醇香而不膩！！",
+      "category": "咖啡系列",
+      "image": "https://picsum.photos/seed/花式摩卡/300/300",
+      "sales": 5
+    },
+    {
+      "id": "6",
+      "title": "美式咖啡",
+      "price": 25,
+      "description": "將濃郁且回甘強烈的濃縮咖啡，與適當的熱水結合，口感較為平衡，卻依舊能品嘗到咖啡的細緻香氣！！",
+      "category": "咖啡系列",
+      "image": "https://picsum.photos/seed/美式咖啡/300/300",
+      "sales": 6
+    }
+  ]
+}

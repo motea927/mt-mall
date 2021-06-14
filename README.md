@@ -25,4 +25,8 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 3. Open `src/main.ts` in VSCode
 4. Open the VSCode command palette
 5. Search and run "Select TypeScript version" -> "Use workspace version"
+
 # mt-mall-f2e-vue
+
+Banner: https://picjumbo.com/two-fresh-lemon-drinks/
+UI Reference: https://xd.adobe.com/spec/934efdb7-a7e4-47d5-572e-efece0914f62-e57f/screen/a91298a6-689f-4b38-8821-b6840ec64910/

@@ -1,13 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
+  <TheHeader />
+  <router-view></router-view>
+  <TheFooter />
 </template>
 
 <script lang="ts">
+// Modules
 import { defineComponent } from 'vue'
+
+// Components
+import TheHeader from '/@/components/TheHeader.vue'
+import TheFooter from '/@/components/TheFooter.vue'
 
 export default defineComponent({
   name: 'App',
-  components: {},
+  components: {
+    TheHeader,
+    TheFooter,
+  },
 })
 </script>
 
