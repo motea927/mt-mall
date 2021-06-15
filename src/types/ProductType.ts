@@ -5,7 +5,7 @@ interface ProductType {
   description: string
   category: string
   image: string
-  sales: 10
+  sales: number
 }
 
 export default ProductType

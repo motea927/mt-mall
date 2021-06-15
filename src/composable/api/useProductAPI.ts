@@ -1,33 +1,65 @@
 import { axiosInstance } from '/@/composable/api/axios'
 import { ref } from 'vue'
 
+import ProductType from '/@/types/ProductType'
+import CategoryType from '/@/types/CategoryType'
+
 const webAPI = axiosInstance()
 
-export const getProducts = (queryParams: {
-  _sort?:
-    | 'id'
-    | 'title'
-    | 'price'
-    | 'description'
-    | 'category'
-    | 'image'
-    | 'sales'
-  id?: string
-  _order?: 'asc' | 'desc'
-  _limit?: number
-}) => {
-  const products = ref([])
-  const error = ref(null)
-  const load = async () => {
+export const getProducts = () => {
+  const products = ref<ProductType[]>([])
+  const error = ref<string>('')
+  const count = ref<number>(0)
+
+  const load = async (queryParams: {
+    _sort?:
+      | 'id'
+      | 'title'
+      | 'price'
+      | 'description'
+      | 'category'
+      | 'image'
+      | 'sales'
+    id?: string
+    _order?: 'asc' | 'desc'
+    _limit?: number
+    _page?: number
+    category?: string
+  }) => {
     try {
-      let data = (await webAPI.get('/products', { params: queryParams })).data
-      if (data.error) {
-        throw Error(data.error)
+      products.value = []
+
+      if (queryParams.category === '') {
+        delete queryParams.category
       }
-      products.value = data
+
+      const response = await webAPI.get('/products', { params: queryParams })
+      count.value = +response.headers['x-total-count']
+
+      if (response.data.error) {
+        throw Error(response.data.error)
+      }
+      products.value = response.data
     } catch (e) {
       error.value = e.message
     }
   }
-  return { products, error, load }
+  return { products, error, load, count }
+}
+
+export const getCategories = () => {
+  const categories = ref<CategoryType[]>([])
+  const error = ref<string>('')
+  const load = async () => {
+    try {
+      const data = (await webAPI.get('/categories')).data
+      if (data.error) {
+        throw Error(data.error)
+      }
+      categories.value = data
+    } catch (e) {
+      error.value = e.message
+    }
+  }
+  return { categories, error, load }
 }

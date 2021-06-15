@@ -53,6 +53,29 @@
       "category": "咖啡系列",
       "image": "https://picsum.photos/seed/美式咖啡/300/300",
       "sales": 6
+    },
+    {
+      "id": "7",
+      "title": "卡布奇諾",
+      "price": 25,
+      "description": "以濃縮咖啡、蒸熱牛奶、綿密細緻奶泡的完美比例，不同於拿鐵的搭配，讓你更能品嘗到咖啡與牛奶的撞擊感，入口便能感受到綿密細緻且滑順入喉的最完美享受！",
+      "category": "咖啡系列",
+      "image": "https://picsum.photos/seed/卡布奇諾/300/300",
+      "sales": 6
+    }
+  ],
+  "categories": [
+    {
+      "category": "所有商品",
+      "count": 7
+    },
+    {
+      "category": "茶系列",
+      "count": 3
+    },
+    {
+      "category": "咖啡系列",
+      "count": 4
     }
   ]
 }

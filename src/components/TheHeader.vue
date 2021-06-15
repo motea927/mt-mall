@@ -10,13 +10,13 @@
         <h1 class="logo">Mt Mall</h1>
       </router-link>
       <nav
-        class="flex flex-wrap items-center justify-center text-base md:ml-auto"
+        class="flex flex-wrap items-center justify-center text-lg md:ml-auto"
       >
         <router-link
-          class="mr-5 font-bold text-primary clickable"
+          class="px-5 mr-5 font-bold text-primary clickable"
           v-for="(headerNav, i) in headerNavLists"
           :key="i"
-          to="#"
+          :to="{ name: headerNav.routeName }"
           >{{ headerNav.text }}
         </router-link>
       </nav>
@@ -43,12 +43,15 @@ export default defineComponent({
     const headerNavLists = [
       {
         text: '首頁',
+        routeName: 'Index',
       },
       {
         text: '商品',
+        routeName: 'Product',
       },
       {
         text: '登入',
+        routeName: 'Index',
       },
     ]
 

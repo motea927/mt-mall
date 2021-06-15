@@ -10,7 +10,7 @@
         <h2 class="mb-5 text-3xl font-bold">熱賣商品</h2>
         <div class="flex flex-wrap -m-4">
           <template v-if="products.length === 0">
-            <ProductSkeleton v-for="i in 6" :key="i" />
+            <ProductSkeleton v-for="i in 3" :key="i" />
           </template>
           <BaseProduct
             v-for="product in products"
@@ -35,11 +35,13 @@ import ProductSkeleton from '/@/components/Product/ProductSkeleton.vue'
 export default defineComponent({
   components: { BaseProduct, ProductSkeleton },
   setup() {
-    const { products, error, load } = getProducts({
+    const { products, error, load } = getProducts()
+    load({
+      _page: 1,
+      _limit: 3,
       _sort: 'sales',
       _order: 'desc',
     })
-    load()
     return { products, error }
   },
 })

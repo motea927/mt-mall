@@ -9,5 +9,10 @@ export default createRouter({
       path: '/',
       component: Index,
     },
+    {
+      name: 'Product',
+      path: '/product',
+      component: () => import('/@/pages/Product.vue'),
+    },
   ],
 })
