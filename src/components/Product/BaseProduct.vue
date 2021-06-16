@@ -1,7 +1,10 @@
 <template>
   <div class="w-full p-4 md:w-1/3">
     <div
-      class="flex flex-col w-full h-full overflow-hidden transition duration-500 ease-in-out rounded  hover:shadow-lg hover:transform hover:-translate-y-1 hover:scale-105"
+      @click="
+        $router.push({ name: 'ProductDetail', params: { id: product.id } })
+      "
+      class="flex flex-col w-full h-full overflow-hidden transition duration-500 ease-in-out rounded  hover:shadow-lg hover:transform hover:-translate-y-1 hover:scale-105 hover:cursor-pointer"
     >
       <div
         class="object-cover pb-[95%] bg-cover bg-center bg-no-repeat"

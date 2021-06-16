@@ -14,5 +14,16 @@ export default createRouter({
       path: '/product',
       component: () => import('/@/pages/Product.vue'),
     },
+    {
+      name: 'ProductDetailRedirect',
+      path: '/product-detail',
+      redirect: '/product',
+      component: () => import('/@/pages/ProductDetail.vue'),
+    },
+    {
+      name: 'ProductDetail',
+      path: '/product-detail/:id',
+      component: () => import('/@/pages/ProductDetail.vue'),
+    },
   ],
 })
