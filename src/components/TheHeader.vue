@@ -10,15 +10,45 @@
         <h1 class="logo">Mt Mall</h1>
       </router-link>
       <nav
-        class="flex flex-wrap items-center justify-center text-lg md:ml-auto"
+        class="flex flex-wrap items-center justify-around w-full text-lg  md:justify-center md:ml-auto md:w-auto"
       >
         <router-link
-          class="px-5 mr-5 font-bold text-primary clickable"
+          class="px-1 font-bold md:px-5 text-primary clickable md:mr-5"
           v-for="(headerNav, i) in headerNavLists"
           :key="i"
           :to="{ name: headerNav.routeName }"
           >{{ headerNav.text }}
         </router-link>
+
+        <router-link
+          v-if="!user.accessToken"
+          class="px-1 font-bold md:px-5 text-primary clickable md:mr-5"
+          :to="{ name: 'Login' }"
+          >登入
+        </router-link>
+
+        <template v-else>
+          <p
+            class="flex items-center justify-start px-1 font-bold  md:mr-5 md:px-5 text-primary clickable"
+          >
+            <span>
+              <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
+                />
+              </svg>
+            </span>
+
+            {{ user.name }}
+          </p>
+          <p
+            @click="onClickLogout"
+            class="font-bold md:mr-5 md:px-5 text-primary clickable"
+          >
+            登出
+          </p>
+        </template>
       </nav>
       <button
         class="inline-flex items-center px-3 py-1 mt-4 text-base border-0 rounded  focus:outline-none hover:bg-gray-200 md:mt-0"
@@ -35,7 +65,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core'
+import { computed, defineComponent } from '@vue/runtime-core'
+import { useRouter } from 'vue-router'
+import { alertSuccess } from '/@/composable/notification/useSweetAlert'
+import { useStore } from '/@/store/store'
 
 export default defineComponent({
   name: 'TheHeader',
@@ -49,13 +82,19 @@ export default defineComponent({
         text: '商品',
         routeName: 'Product',
       },
-      {
-        text: '登入',
-        routeName: 'Index',
-      },
     ]
 
-    return { headerNavLists }
+    const store = useStore()
+    const user = computed(() => store.state.user)
+    const router = useRouter()
+
+    const onClickLogout = () => {
+      store.dispatch('clearUser')
+      alertSuccess('已成功登出')
+      router.push({ name: 'Index' })
+    }
+
+    return { headerNavLists, user, onClickLogout }
   },
 })
 </script>

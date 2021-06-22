@@ -25,5 +25,15 @@ export default createRouter({
       path: '/product-detail/:id',
       component: () => import('/@/pages/ProductDetail.vue'),
     },
+    {
+      name: 'Login',
+      path: '/login',
+      component: () => import('/@/pages/Login.vue'),
+    },
+    {
+      name: 'Signup',
+      path: '/signup',
+      component: () => import('/@/pages/Signup.vue'),
+    },
   ],
 })

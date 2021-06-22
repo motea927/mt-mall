@@ -6,7 +6,11 @@ module.exports = {
     extend: {
       colors: {
         primary: '#C99037',
+        secondary: '#f9de59',
         'light-primary': '#f9f3eb',
+      },
+      backgroundPosition: {
+        'left-input': '1rem',
       },
     },
   },

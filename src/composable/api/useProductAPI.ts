@@ -41,7 +41,7 @@ export const getProducts = () => {
       }
       products.value = response.data
     } catch (e) {
-      error.value = e.message
+      error.value = e.response.data || e.message
     }
   }
   return { products, error, load, count }
@@ -58,7 +58,7 @@ export const getCategories = () => {
       }
       categories.value = data
     } catch (e) {
-      error.value = e.message
+      error.value = e.response.data || e.message
     }
   }
   return { categories, error, load }

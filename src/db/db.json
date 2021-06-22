@@ -77,5 +77,13 @@
       "category": "咖啡系列",
       "count": 4
     }
+  ],
+  "users": [
+    {
+      "name": "測試",
+      "email": "test@test.com",
+      "password": "test1234",
+      "id": 1
+    }
   ]
 }
