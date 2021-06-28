@@ -35,5 +35,10 @@ export default createRouter({
       path: '/signup',
       component: () => import('/@/pages/Signup.vue'),
     },
+    {
+      name: 'Cart',
+      path: '/cart',
+      component: () => import('/@/pages/Cart.vue'),
+    },
   ],
 })

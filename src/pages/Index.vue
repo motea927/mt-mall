@@ -12,11 +12,13 @@
           <template v-if="products.length === 0">
             <ProductSkeleton v-for="i in 3" :key="i" />
           </template>
-          <BaseProduct
-            v-for="product in products"
-            :key="product.id"
-            :product="product"
-          />
+          <template v-else>
+            <BaseProduct
+              v-for="product in products"
+              :key="product.id"
+              :product="product"
+            />
+          </template>
         </div>
       </div>
     </section>

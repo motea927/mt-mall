@@ -29,7 +29,12 @@
             min="1"
             class="w-20 font-bold text-center text-white border-2 border-white  bg-primary"
           />
-          <button class="px-8 py-4 bg-white text-primary">加入購物車</button>
+          <button
+            @click="onClickAddCart"
+            class="px-8 py-4 bg-white text-primary"
+          >
+            加入購物車
+          </button>
         </div>
       </div>
       <div class="flex items-center justify-center w-full md:p-5 md:w-1/2">
@@ -45,28 +50,69 @@
 
 <script lang="ts">
 // Modules
-import { defineComponent, ref } from '@vue/runtime-core'
-import { useRoute } from 'vue-router'
-import { getProducts } from '/@/composable/api/useProductAPI'
+import { computed, defineComponent, ref, watchEffect } from '@vue/runtime-core'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from '/@/store/store'
 
 // Components
 import ProductDetailSkeleton from '/@/components/Product/ProductDetailSkeleton.vue'
 
+// API
+import { getProducts } from '/@/composable/api/useProductAPI'
+import router from '../router/router'
+
 export default defineComponent({
   components: { ProductDetailSkeleton },
   setup() {
+    const router = useRouter()
     const route = useRoute()
     const id = route.params.id as unknown as string
 
     const { products, load: loadProduct } = getProducts()
 
-    loadProduct({
-      id,
+    watchEffect(async () => {
+      await loadProduct({
+        id,
+      })
+      if (products.value.length === 0) router.push({ name: 'Index' })
     })
 
     const buyCount = ref(1)
 
-    return { products, buyCount }
+    watchEffect(() => {
+      if (buyCount.value >= 1) return
+      buyCount.value = 1
+    })
+
+    const store = useStore()
+    const cartLists = computed(() => store.state.cart)
+
+    const onClickAddCart = () => {
+      const item = cartLists.value.find((product) => product.id === id)
+
+      if (!item) {
+        store.commit('setCart', [
+          ...cartLists.value,
+          {
+            ...products.value[0],
+            count: 1,
+          },
+        ])
+        return
+      }
+
+      const newCartLists = cartLists.value.map((_product) => {
+        if (_product.id !== id) return { ..._product }
+
+        return {
+          ..._product,
+          count: _product.count + 1,
+        }
+      })
+      store.commit('setCart', newCartLists)
+    }
+
+    return { products, buyCount, onClickAddCart }
   },
 })
 </script>

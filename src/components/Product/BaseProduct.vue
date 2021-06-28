@@ -4,7 +4,21 @@
       @click="
         $router.push({ name: 'ProductDetail', params: { id: product.id } })
       "
-      class="flex flex-col w-full h-full overflow-hidden transition duration-500 ease-in-out rounded  hover:shadow-lg hover:transform hover:-translate-y-1 hover:scale-105 hover:cursor-pointer"
+      class="
+        flex flex-col
+        w-full
+        h-full
+        overflow-hidden
+        transition
+        duration-500
+        ease-in-out
+        rounded
+        hover:shadow-lg
+        hover:transform
+        hover:-translate-y-1
+        hover:scale-105
+        hover:cursor-pointer
+      "
     >
       <div
         class="object-cover pb-[95%] bg-cover bg-center bg-no-repeat"
@@ -16,7 +30,10 @@
           NT$ {{ product.price }}
         </p>
       </div>
-      <button class="block p-4 text-2xl font-bold bg-light-primary clickable">
+      <button
+        @click.stop="onClickAddCart(product)"
+        class="block p-4 text-2xl font-bold bg-light-primary clickable"
+      >
         加入購物車
       </button>
     </div>
@@ -24,7 +41,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/runtime-core'
+// Modules
+import { computed, defineComponent, PropType } from '@vue/runtime-core'
+import { useStore } from '/@/store/store'
+
+// Types
 import ProductType from '/@/types/ProductType'
 
 export default defineComponent({
@@ -33,6 +54,39 @@ export default defineComponent({
       require: true,
       type: Object as PropType<ProductType>,
     },
+  },
+  setup() {
+    const store = useStore()
+    const cartLists = computed(() => store.state.cart)
+    const onClickAddCart = (product: ProductType) => {
+      const item = cartLists.value.find(
+        (_product) => product.id === _product.id
+      )
+
+      if (!item) {
+        store.commit('setCart', [
+          ...cartLists.value,
+          {
+            ...product,
+            count: 1,
+          },
+        ])
+        return
+      }
+
+      const newCartLists = cartLists.value.map((_product) => {
+        if (_product.id !== product.id) return { ..._product }
+        return {
+          ..._product,
+          count: _product.count + 1,
+        }
+      })
+      store.commit('setCart', newCartLists)
+    }
+
+    return {
+      onClickAddCart,
+    }
   },
 })
 </script>

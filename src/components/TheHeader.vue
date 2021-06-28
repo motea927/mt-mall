@@ -10,7 +10,7 @@
         <h1 class="logo">Mt Mall</h1>
       </router-link>
       <nav
-        class="flex flex-wrap items-center justify-around w-full text-lg  md:justify-center md:ml-auto md:w-auto"
+        class="flex flex-wrap items-center justify-around w-full mb-5 text-lg  md:mb-0 md:justify-center md:ml-auto md:w-auto"
       >
         <router-link
           class="px-1 font-bold md:px-5 text-primary clickable md:mr-5"
@@ -51,7 +51,8 @@
         </template>
       </nav>
       <button
-        class="inline-flex items-center px-3 py-1 mt-4 text-base border-0 rounded  focus:outline-none hover:bg-gray-200 md:mt-0"
+        @click="$router.push({ name: 'Cart' })"
+        class="relative inline-flex items-center px-3 py-1 text-base border-0 rounded  focus:outline-none hover:bg-gray-200 md:mt-0"
       >
         <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24">
           <path
@@ -59,6 +60,12 @@
             d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"
           />
         </svg>
+        <div
+          v-if="cartCount > 0"
+          class="absolute flex items-center justify-center w-8 h-6 text-white rounded-full  -right-2 -top-4 bg-primary"
+        >
+          {{ cartCount }}
+        </div>
       </button>
     </div>
   </header>
@@ -85,16 +92,20 @@ export default defineComponent({
     ]
 
     const store = useStore()
-    const user = computed(() => store.state.user)
     const router = useRouter()
 
+    const user = computed(() => store.state.user)
     const onClickLogout = () => {
       store.dispatch('clearUser')
       alertSuccess('已成功登出')
       router.push({ name: 'Index' })
     }
 
-    return { headerNavLists, user, onClickLogout }
+    const cartCount = computed(() =>
+      store.state.cart.reduce((acc, current) => acc + current.count, 0)
+    )
+
+    return { headerNavLists, user, onClickLogout, cartCount }
   },
 })
 </script>
