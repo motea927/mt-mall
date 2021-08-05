@@ -59,7 +59,6 @@ import ProductDetailSkeleton from '/@/components/Product/ProductDetailSkeleton.v
 
 // API
 import { getProducts } from '/@/composable/api/useProductAPI'
-import router from '../router/router'
 
 export default defineComponent({
   components: { ProductDetailSkeleton },

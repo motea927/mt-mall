@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Index from '/@/pages/Index.vue'
 
-export default createRouter({
+import { store } from '/@/store/store'
+
+export const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
@@ -40,5 +42,41 @@ export default createRouter({
       path: '/cart',
       component: () => import('/@/pages/Cart.vue'),
     },
+    {
+      name: 'Purchase',
+      path: '/purchase',
+      component: () => import('/@/pages/Purchase.vue'),
+      redirect: '/purchase/address',
+      children: [
+        {
+          name: 'PurchaseAddress',
+          path: 'address',
+          component: () => import('/@/pages/Purchase/Address.vue'),
+        },
+        {
+          name: 'PurchaseCredit',
+          path: 'credit',
+          component: () => import('/@/pages/Purchase/Credit.vue'),
+        },
+      ],
+    },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const privatePagesPath = [
+    '/purchase',
+    '/purchase/address',
+    '/purchase/credit',
+  ]
+  const authRequired = privatePagesPath.includes(to.path)
+
+  const loggedIn = store.state.user.accessToken
+
+  if (authRequired && !loggedIn) {
+    return next('/')
+  }
+
+  next()
 })

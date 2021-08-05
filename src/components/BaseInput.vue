@@ -3,8 +3,9 @@
     :value="modelValue"
     @input="onInput"
     type="text"
-    class="w-full px-5 py-4 pl-12 bg-no-repeat  bg-left-input focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent text-primary bg-light-primary"
+    class="w-full px-5 py-4 bg-no-repeat  bg-left-input focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent text-primary bg-light-primary"
     :style="style"
+    :class="icon ? 'pl-12' : ''"
   />
 </template>
 
@@ -18,6 +19,7 @@ export default defineComponent({
     },
     icon: {
       type: String as PropType<'email' | 'password' | 'name'>,
+      required: false,
     },
   },
   setup(props, ctx) {
