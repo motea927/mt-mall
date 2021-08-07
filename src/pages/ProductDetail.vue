@@ -118,7 +118,7 @@ export default defineComponent({
 
 <style>
 .product-detail {
-  background: linear-gradient(115deg, #c99037 50%, transparent 50%) center
+  background: linear-gradient(115deg, #c99037 50%, transparent 50.1%) center
     center / 100% 100%;
 }
 @media (max-width: 768px) {

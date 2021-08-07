@@ -28,7 +28,8 @@
         </router-link>
 
         <template v-else>
-          <p
+          <router-link
+            :to="{ name: 'OrderDetail' }"
             class="flex items-center justify-start px-1 font-bold  md:mr-5 md:px-5 text-primary clickable"
           >
             <span>
@@ -41,7 +42,7 @@
             </span>
 
             {{ user.name }}
-          </p>
+          </router-link>
           <p
             @click="onClickLogout"
             class="font-bold md:mr-5 md:px-5 text-primary clickable"

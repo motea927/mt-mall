@@ -22,7 +22,26 @@
               您的購物車
             </h2>
             <div class="flex flex-col divide-y divide-gray-1">
-              <CartItem v-for="cart in cartLists" :key="cart.id" :cart="cart" />
+              <template v-if="cartLists.length !== 0">
+                <CartItem
+                  v-for="cart in cartLists"
+                  :key="cart.id"
+                  :cart="cart"
+                />
+              </template>
+              <template v-else>
+                <BaseEmpty
+                  ><p class="mb-5 text-center animate-bounce">
+                    您的訂單記錄爲空，立刻
+                    <router-link
+                      :to="{ name: 'Product' }"
+                      class="border-b-2 border-primary clickable"
+                      >前往購買吧</router-link
+                    >
+                    ！！
+                  </p></BaseEmpty
+                >
+              </template>
             </div>
           </div>
         </div>
@@ -30,26 +49,26 @@
         <div class="w-full md:p-4 md:w-1/3">
           <div class="p-4 md:bg-primary">
             <h2
-              class="p-4 mb-4 text-2xl font-bold text-center text-white bg-primary md:mb-0"
+              class="p-4 mb-4 text-2xl font-bold text-center text-white  bg-primary md:mb-0"
             >
               訂單摘要
             </h2>
 
             <hr class="hidden my-4 border-1 border-light-primary md:block" />
             <div
-              class="flex items-center justify-between mb-2 text-primary md:text-light-primary"
+              class="flex items-center justify-between mb-2  text-primary md:text-light-primary"
             >
               <p>小計</p>
               <p>NT$ {{ subTotal }}</p>
             </div>
             <div
-              class="flex items-center justify-between mb-4 md:mb-2 text-primary md:text-light-primary"
+              class="flex items-center justify-between mb-4  md:mb-2 text-primary md:text-light-primary"
             >
               <p>運費</p>
               <p>NT$ 60</p>
             </div>
             <div
-              class="flex items-center justify-between mb-2 text-xl font-bold text-primary md:text-white"
+              class="flex items-center justify-between mb-2 text-xl font-bold  text-primary md:text-white"
             >
               <p>總計</p>
               <p>NT$ {{ subTotal + 60 }}</p>
@@ -84,16 +103,17 @@
 
 <script lanng="ts">
 // Modules
-import { computed } from '@vue/runtime-core'
+import { computed, defineComponent } from '@vue/runtime-core'
 import { useStore } from '/@/store/store'
 import { useRouter } from 'vue-router'
 import { alertError } from '/@/composable/notification/useSweetAlert'
 
 // Components
 import CartItem from '/@/components/Cart/CartItem.vue'
+import BaseEmpty from '/@/components/BaseEmpty.vue'
 
-export default {
-  components: { CartItem },
+export default defineComponent({
+  components: { CartItem, BaseEmpty },
   setup() {
     const store = useStore()
     const router = useRouter()
@@ -116,5 +136,5 @@ export default {
 
     return { cartLists, subTotal, onClickPurchase }
   },
-}
+})
 </script>

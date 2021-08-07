@@ -10,15 +10,7 @@
       <div class="mb-5 border w-80 border-light-primary">
         <div class="text-primary">
           <h2
-            class="
-              p-4
-              mb-4
-              text-2xl
-              font-bold
-              text-center text-primary
-              bg-light-primary
-              md:mb-0
-            "
+            class="p-4 mb-4 text-2xl font-bold text-center  text-primary bg-light-primary md:mb-0"
           >
             訂單摘要
           </h2>
@@ -29,28 +21,13 @@
               <p>NT$ {{ subTotal }}</p>
             </div>
             <div
-              class="
-                flex
-                items-center
-                justify-between
-                mb-4
-                md:mb-2
-                text-primary
-              "
+              class="flex items-center justify-between mb-4  md:mb-2 text-primary"
             >
               <p>運費</p>
               <p>NT$ 60</p>
             </div>
             <div
-              class="
-                flex
-                items-center
-                justify-between
-                mb-2
-                text-xl
-                font-bold
-                text-primary
-              "
+              class="flex items-center justify-between mb-2 text-xl font-bold  text-primary"
             >
               <p>總計</p>
               <p>NT$ {{ subTotal + 60 }}</p>
@@ -62,15 +39,7 @@
       <div class="border w-80 border-light-primary">
         <div class="text-primary">
           <h2
-            class="
-              p-4
-              mb-4
-              text-2xl
-              font-bold
-              text-center text-primary
-              bg-light-primary
-              md:mb-0
-            "
+            class="p-4 mb-4 text-2xl font-bold text-center  text-primary bg-light-primary md:mb-0"
           >
             購物清單
           </h2>
@@ -101,14 +70,10 @@
 
 <script lang="ts">
 // Modules
-import { computed } from '@vue/runtime-core'
+import { computed, defineComponent } from '@vue/runtime-core'
 import { useStore } from '/@/store/store'
-import {
-  alertSuccess,
-  alertError,
-} from '/@/composable/notification/useSweetAlert'
 
-export default {
+export default defineComponent({
   setup() {
     const store = useStore()
     const cartLists = computed(() => store.state.cart)
@@ -122,5 +87,5 @@ export default {
 
     return { cartLists, subTotal }
   },
-}
+})
 </script>

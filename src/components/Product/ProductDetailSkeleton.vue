@@ -34,7 +34,7 @@
 
 <style>
 .product-detail-skeleton {
-  background: linear-gradient(115deg, #ccb 50%, transparent 50%) center center /
+  background: linear-gradient(115deg, #ccb 50%, transparent 50.1%) center center /
     100% 100%;
 }
 @media (max-width: 768px) {

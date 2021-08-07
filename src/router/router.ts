@@ -60,6 +60,11 @@ export const router = createRouter({
         },
       ],
     },
+    {
+      name: 'OrderDetail',
+      path: '/order-detail',
+      component: () => import('/@/pages/OrderDetail.vue'),
+    },
   ],
 })
 
@@ -69,6 +74,7 @@ router.beforeEach((to, from, next) => {
     '/purchase',
     '/purchase/address',
     '/purchase/credit',
+    '/order-detail',
   ]
   const authRequired = privatePagesPath.includes(to.path)
 
