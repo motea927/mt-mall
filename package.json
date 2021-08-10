@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start-db": "~/mongodb-4.4.6/bin/mongod --dbpath=/Users/mt/mongodb-data",
     "dev": "env-cmd -f ./config/dev.env nodemon ./src/app.js",
     "test": "env-cmd -f ./config/test.env jest --watchAll --runInBand"
   },
@@ -13,7 +14,8 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.5"
+    "mongoose": "^5.13.5",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
