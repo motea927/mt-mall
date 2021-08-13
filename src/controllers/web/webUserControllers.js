@@ -37,7 +37,7 @@ module.exports = {
       res.status(500).send()
     }
   },
-  async getAll(req, res, next) {
+  async getAllWithAdmin(req, res, next) {
     try {
       const userLists = await User.find({}, null, {
         limit: parseInt(req.query.limit),
@@ -49,7 +49,7 @@ module.exports = {
       res.status(400).send(e)
     }
   },
-  async patch(req, res, next) {
+  async patchWithAdmin(req, res, next) {
     const updates = Object.keys(req.body)
     const allowUpdates = ['name', 'password']
     const isValidOperation = updates.every(update =>
@@ -69,7 +69,7 @@ module.exports = {
       res.status(404).send(e)
     }
   },
-  async delete(req, res, next) {
+  async deleteWithAdmin(req, res, next) {
     try {
       const user = await User.findById(req.params.id)
       if (!user) return res.status(404).send('未找到使用者')

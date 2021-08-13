@@ -1,8 +1,8 @@
 const request = require('supertest')
-const app = require('../app')
-const WebUser = require('../models/web/webUserModel')
+const app = require('../../app')
+const WebUser = require('../../models/web/webUserModel')
 
-const { setupDatabase, webUserOne, adminUserOne } = require('./fixtures/db')
+const { setupDatabase, webUserOne } = require('../fixtures/db')
 
 beforeEach(setupDatabase)
 
@@ -84,34 +84,4 @@ test('Should logout with already login user', async () => {
 
   const user = await WebUser.findById(webUserOne._id)
   expect(user.token).toBe('')
-})
-
-test('Should get web user lists with correct admin', async () => {
-  const response = await request(app)
-    .get('/web/user')
-    .set('Authorization', `Bearer ${adminUserOne.token}`)
-    .expect(200)
-
-  expect(response.body.length).toBe(1)
-})
-
-test('Should update web user information with correct admin', async () => {
-  const response = await request(app)
-    .patch(`/web/user/${webUserOne._id}`)
-    .set('Authorization', `Bearer ${adminUserOne.token}`)
-    .send({ name: '改過' })
-    .expect(200)
-
-  const user = await WebUser.findById(response.body._id)
-  expect(user.name).toBe('改過')
-})
-
-test('Should delete web user with correct admin', async () => {
-  const response = await request(app)
-    .delete(`/web/user/${webUserOne._id}`)
-    .set('Authorization', `Bearer ${adminUserOne.token}`)
-    .expect(200)
-
-  const user = await WebUser.findById(response.body._id)
-  expect(user).toBeNull()
 })

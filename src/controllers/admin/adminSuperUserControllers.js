@@ -1,4 +1,4 @@
-const User = require('../../models/admin/adminUserModel')
+const User = require('../../models/admin/adminSuperUserModel')
 
 module.exports = {
   async create(req, res, next) {
@@ -34,7 +34,6 @@ module.exports = {
       await req.user.save()
       res.send()
     } catch (e) {
-      console.log(e)
       res.status(500).send()
     }
   },

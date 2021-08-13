@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
-const adminUserSchema = new mongoose.Schema(
+const adminSuperUserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -31,7 +31,7 @@ const adminUserSchema = new mongoose.Schema(
   }
 )
 
-adminUserSchema.methods.toJSON = function () {
+adminSuperUserSchema.methods.toJSON = function () {
   const user = this
   const userObject = user.toObject()
 
@@ -40,7 +40,7 @@ adminUserSchema.methods.toJSON = function () {
   return userObject
 }
 
-adminUserSchema.methods.generateAuthToken = async function () {
+adminSuperUserSchema.methods.generateAuthToken = async function () {
   const user = this
   const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
 
@@ -50,7 +50,7 @@ adminUserSchema.methods.generateAuthToken = async function () {
   return token
 }
 
-adminUserSchema.statics.findByCredentials = async (account, password) => {
+adminSuperUserSchema.statics.findByCredentials = async (account, password) => {
   const user = await User.findOne({ account })
 
   if (!user) throw new Error('帳號或密碼錯誤')
@@ -62,7 +62,7 @@ adminUserSchema.statics.findByCredentials = async (account, password) => {
 }
 
 // hash password
-adminUserSchema.pre('save', async function (next) {
+adminSuperUserSchema.pre('save', async function (next) {
   const user = this
   if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, 8)
@@ -71,6 +71,6 @@ adminUserSchema.pre('save', async function (next) {
   next()
 })
 
-const User = mongoose.model('AdminUser', adminUserSchema)
+const User = mongoose.model('AdminSuperUser', adminSuperUserSchema)
 
 module.exports = User
