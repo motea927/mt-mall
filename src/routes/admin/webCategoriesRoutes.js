@@ -5,6 +5,7 @@ const webCategoriesControllers = require('../../controllers/web/webCategoriesCon
 const adminAuth = require('../../middleware/authAdmin')
 
 // 給後臺管理APP 商品類別
+router.get('/categories', webCategoriesControllers.getAll)
 router.post('/categories', adminAuth, webCategoriesControllers.create)
 router.patch('/categories/:id', adminAuth, webCategoriesControllers.patch)
 router.delete('/categories/:id', adminAuth, webCategoriesControllers.delete)

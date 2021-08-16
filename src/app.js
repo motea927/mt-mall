@@ -10,6 +10,11 @@ const webRoutes = require('./routes/web/webRoutes')
 const app = express()
 const port = process.env.PORT
 
+const cors = require('cors')
+if (process.env.mode === 'dev') {
+  app.use(cors())
+}
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 

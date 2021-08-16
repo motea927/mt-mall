@@ -18,12 +18,17 @@ const webProductSchema = new mongoose.Schema(
       }
     },
     description: {
-      type: String
+      type: String,
+      require: true
     },
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'WebCategories'
+    },
+    category: {
+      type: String,
+      require: true
     },
     image: {
       type: String

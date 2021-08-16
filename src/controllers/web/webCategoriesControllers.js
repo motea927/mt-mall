@@ -1,4 +1,8 @@
 const Categories = require('../../models/web/webCategoriesModel')
+const Product = require('../../models/web/webProductModel')
+const path = require('path')
+const fs = require('fs')
+const fsPromises = fs.promises
 
 module.exports = {
   async create(req, res, next) {
@@ -45,9 +49,24 @@ module.exports = {
   },
   async delete(req, res, next) {
     try {
-      const category = await Categories.findById(req.params.id)
+      const categoryId = req.params.id
+      const category = await Categories.findById(categoryId)
       if (!category) return res.status(404).send('未找到該商品類別')
+
       await category.remove()
+      const productLists = await Product.find({
+        categoryId
+      })
+
+      await Product.deleteMany({
+        categoryId
+      })
+
+      for (const product of productLists) {
+        await fsPromises.unlink(
+          path.join(__dirname + '../../..') + product.image
+        )
+      }
 
       res.send(category)
     } catch (e) {

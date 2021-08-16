@@ -25,7 +25,7 @@ module.exports = {
       await user.generateAuthToken()
       res.send(user)
     } catch (e) {
-      res.status(404).send(e)
+      res.status(404).send('帳號或密碼錯誤')
     }
   },
   async logout(req, res, next) {

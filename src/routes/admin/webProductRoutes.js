@@ -33,6 +33,8 @@ router.patch(
   webProductControllers.patchWithAdmin
 )
 
+router.get('/product', webProductControllers.getAll)
+
 router.delete('/product/:id', adminAuth, webProductControllers.deleteWithAdmin)
 
 module.exports = router

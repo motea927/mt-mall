@@ -1,5 +1,7 @@
 const Product = require('../../models/web/webProductModel')
+const Category = require('../../models/web/webCategoriesModel')
 const fs = require('fs')
+// const fsPromises = fs.promises
 const path = require('path')
 
 module.exports = {
@@ -8,8 +10,12 @@ module.exports = {
       req.body.image = `/uploads/${req.file.filename}`
 
       const product = new Product(req.body)
-
+      const categoryId = req.body.categoryId
+      const category = await Category.findById(categoryId)
+      product.category = category.category
       await product.save()
+      category.count++
+      await category.save()
       res.status(201).send(product)
     } catch (e) {
       const fileName = req.file ? req.file.filename : ''
@@ -87,6 +93,12 @@ module.exports = {
       const product = await Product.findById(req.params.id)
       if (!product) return res.status(404).send('未找到該商品類別')
       await product.remove()
+
+      //
+      const categoryId = product.categoryId
+      const category = await Category.findById(categoryId)
+      category.count--
+      await category.save()
       await fs.unlink(path.join(__dirname, `../../${product.image}`), err => {})
       res.send(product)
     } catch (e) {
