@@ -1,8 +1,8 @@
 interface UserType {
-  id: string
+  _id: string
   name: string
   email: string
-  accessToken: string
+  token: string
 }
 
 export default UserType

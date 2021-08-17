@@ -1,5 +1,6 @@
 const Order = require('../../models/web/webOrderModel')
 const ProductModel = require('../../models/web/webProductModel')
+const WebUserModel = require('../../models/web/webUserModel')
 const dayjs = require('dayjs')
 
 module.exports = {
@@ -10,12 +11,13 @@ module.exports = {
       // 算金額與前端符合不符合
       const totalPrice = await order.cart.reduce(
         async (accumulator, currentValue) => {
-          const product = await ProductModel.findById(currentValue.id)
-          return accumulator + product.price * currentValue.count
+          const product = await ProductModel.findById(currentValue._id)
+          return (await accumulator) + product.price * currentValue.count
         },
         0
       )
 
+      // console.log(order.totalPrice)
       if (totalPrice !== order.totalPrice) {
         return res.status(400).send('商品金額錯誤，請重新整理')
       }
@@ -32,14 +34,15 @@ module.exports = {
       res.status(400).send(e)
     }
   },
-  async getAll(req, res, next) {
+  async getAllWithUser(req, res, next) {
     try {
-      const productLists = await Product.find({}, null, {
-        limit: parseInt(req.query.limit),
-        skip: parseInt(req.query.skip)
-      })
+      await req.user
+        .populate({
+          path: 'order'
+        })
+        .execPopulate()
 
-      res.send(productLists)
+      res.send(req.user.order)
     } catch (e) {
       res.status(400).send(e)
     }

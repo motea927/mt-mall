@@ -33,7 +33,7 @@ export const getProducts = () => {
         delete queryParams.category
       }
 
-      const response = await webAPI.get('/products', { params: queryParams })
+      const response = await webAPI.get('/product', { params: queryParams })
       count.value = +response.headers['x-total-count']
 
       if (response.data.error) {

@@ -18,11 +18,11 @@ export const apiLogin = () => {
       let response
 
       if (import.meta.env.MODE === 'development') {
-        response = await webAPI.get('/users/login', {
+        response = await webAPI.get('/user/login', {
           params: { ...queryParams },
         })
       } else {
-        response = await webAPI.post('/users/login', queryParams)
+        response = await webAPI.post('/user/login', queryParams)
       }
 
       if (response.data.error) {
@@ -32,7 +32,7 @@ export const apiLogin = () => {
       if (import.meta.env.MODE === 'development') {
         response.data = response.data[0]
 
-        response.data.accessToken = response.data.id
+        response.data.token = response.data.id
       }
 
       user.value = response.data
@@ -60,14 +60,14 @@ export const apiSignup = () => {
     try {
       user.value = null
 
-      const response = await webAPI.post('/users', queryParams)
+      const response = await webAPI.post('/user', queryParams)
 
       if (response.data.error) {
         throw Error(response.data.error)
       }
 
       if (import.meta.env.MODE === 'development') {
-        response.data.accessToken = response.data.id
+        response.data.token = response.data.id
       }
 
       user.value = response.data

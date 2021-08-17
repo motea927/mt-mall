@@ -39,7 +39,7 @@
       </div>
       <div class="flex items-center justify-center w-full md:p-5 md:w-1/2">
         <img
-          :src="products[0].image"
+          :src="`${appURL}${products[0].image}`"
           alt=""
           class="object-cover w-full md:w-52"
         />
@@ -65,7 +65,7 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const id = route.params.id as unknown as string
+    const id = route.params._id as unknown as string
 
     const { products, load: loadProduct } = getProducts()
 
@@ -87,7 +87,7 @@ export default defineComponent({
     const cartLists = computed(() => store.state.cart)
 
     const onClickAddCart = () => {
-      const item = cartLists.value.find((product) => product.id === id)
+      const item = cartLists.value.find((product) => product._id === id)
 
       if (!item) {
         store.commit('setCart', [
@@ -101,7 +101,7 @@ export default defineComponent({
       }
 
       const newCartLists = cartLists.value.map((_product) => {
-        if (_product.id !== id) return { ..._product }
+        if (_product._id !== id) return { ..._product }
 
         return {
           ..._product,
@@ -110,8 +110,8 @@ export default defineComponent({
       })
       store.commit('setCart', newCartLists)
     }
-
-    return { products, buyCount, onClickAddCart }
+    const appURL = import.meta.env.VITE_APP_URL as String
+    return { products, buyCount, onClickAddCart, appURL }
   },
 })
 </script>

@@ -136,7 +136,14 @@ export default defineComponent({
       const cart = store.state.cart
       const user = store.state.user
 
-      await load(user, { ...addressObj, ...creditObj.value }, cart)
+      await load(
+        user,
+        {
+          ...addressObj,
+          ...creditObj.value,
+        },
+        cart
+      )
 
       if (error.value) return alertError(error.value)
 

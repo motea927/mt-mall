@@ -2,11 +2,11 @@
   <div class="flex flex-wrap items-center justify-between py-5 md:flex-nowrap">
     <div
       class="w-1/2 bg-center bg-no-repeat bg-cover md:w-28 h-28"
-      :style="`background-image: url('${cart.image}')`"
+      :style="`background-image: url('${appURL}${cart.image}')`"
     ></div>
 
     <router-link
-      :to="{ name: 'ProductDetail', params: { id: cart.id } }"
+      :to="{ name: 'ProductDetail', params: { id: cart._id } }"
       class="w-1/2 px-5 text-left  md:text-center md:flex-1 md:w-auto text-primary clickable"
     >
       <h3 class="text-xl md:text-base">{{ cart.title }}</h3>
@@ -70,7 +70,7 @@ export default defineComponent({
 
     const onClickRemove = (cart: ProductType) => {
       const newCartLists = cartLists.value.filter(
-        (_cart) => _cart.id !== cart.id
+        (_cart) => _cart._id !== cart._id
       )
       store.commit('setCart', newCartLists)
     }
@@ -86,8 +86,8 @@ export default defineComponent({
     const onClickAdd = (cart: ProductType) => {
       cart.count++
     }
-
-    return { onClickRemove, onClickSub, onClickAdd }
+    const appURL = import.meta.env.VITE_APP_URL as String
+    return { onClickRemove, onClickSub, onClickAdd, appURL }
   },
 })
 </script>

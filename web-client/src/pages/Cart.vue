@@ -25,7 +25,7 @@
               <template v-if="cartLists.length !== 0">
                 <CartItem
                   v-for="cart in cartLists"
-                  :key="cart.id"
+                  :key="cart._id"
                   :cart="cart"
                 />
               </template>

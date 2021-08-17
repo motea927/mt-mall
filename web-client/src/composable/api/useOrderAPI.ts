@@ -13,7 +13,7 @@ const webAPI = axiosInstance()
 webAPI.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    config.headers.Authorization = `Bearer ${store.state.user.accessToken}`
+    config.headers.Authorization = `Bearer ${store.state.user.token}`
     return config
   },
   function (error) {
@@ -43,7 +43,7 @@ export const apiCreateNewOrder = () => {
       const date = today.toISOString().slice(0, 10)
 
       const response = await webAPI.post('/order', {
-        userId: user.id,
+        userId: user._id,
         purchaseInformation,
         cart,
         totalPrice, // not really sent to backend

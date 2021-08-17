@@ -1,11 +1,11 @@
 <template>
-  <router-link :to="{ name: 'ProductDetail', params: { id: cartItem.id } }">
+  <router-link :to="{ name: 'ProductDetail', params: { id: cartItem._id } }">
     <div
       class="flex items-center justify-between p-6 bg-white border-b  hover:shadow-lg hover:transform hover:-translate-y-1 hover:scale-105 hover:cursor-pointer"
     >
       <div
         class="w-20 h-20 bg-no-repeat bg-cover"
-        :style="`background-image: url(${cartItem.image})`"
+        :style="`background-image: url(${appURL}${cartItem.image})`"
       ></div>
       <div>
         <h2 class="text-base font-medium">{{ cartItem.title }}</h2>
@@ -26,6 +26,10 @@ export default defineComponent({
     cartItem: {
       type: Object as PropType<ProductType>,
     },
+  },
+  setup() {
+    const appURL = import.meta.env.VITE_APP_URL as String
+    return { appURL }
   },
 })
 </script>

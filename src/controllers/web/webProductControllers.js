@@ -30,13 +30,19 @@ module.exports = {
   },
   async getAll(req, res, next) {
     try {
+      const page = req.query._page ? parseInt(req.query._page) - 1 : 0
+      const sortParams = {}
+      if (req.query._sort) {
+        sortParams[req.query._sort] = req.query._order || 'desc'
+      }
       const productLists = await Product.find({}, null, {
-        limit: parseInt(req.query.limit),
-        skip: parseInt(req.query.skip)
-      })
+        limit: parseInt(req.query._limit),
+        skip: page
+      }).sort(sortParams)
 
       res.send(productLists)
     } catch (e) {
+      console.log(e)
       res.status(400).send(e)
     }
   },
@@ -104,7 +110,13 @@ module.exports = {
       const category = await Category.findById(categoryId)
       category.count--
       await category.save()
-      await fs.unlink(path.join(__dirname, `../../${product.image}`), err => {})
+      if (product.sales === 0) {
+        await fs.unlink(
+          path.join(__dirname, `../../${product.image}`),
+          err => {}
+        )
+      }
+
       res.send(product)
     } catch (e) {
       res.status(500).send(e)

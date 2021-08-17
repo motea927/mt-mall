@@ -5,9 +5,7 @@ const webAuth = require('../../middleware/authWeb')
 const adminAuth = require('../../middleware/authAdmin')
 
 // web 查詢訂單
-// router.get('/product', webProductControllers.getAll)
-
-// 給後臺管理用、增、查詢
+router.get('/order', webAuth, webOrderControllers.getAllWithUser)
 
 router.post('/order', webAuth, webOrderControllers.create)
 

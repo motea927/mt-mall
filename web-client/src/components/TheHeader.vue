@@ -1,7 +1,14 @@
 <template>
   <header class="text-gray-600 body-font">
     <div
-      class="container flex flex-col flex-wrap items-center p-5 mx-auto  md:flex-row"
+      class="
+        container
+        flex flex-col flex-wrap
+        items-center
+        p-5
+        mx-auto
+        md:flex-row
+      "
     >
       <router-link
         class="flex items-center mb-4 font-medium md:mb-0 clickable"
@@ -10,7 +17,15 @@
         <h1 class="logo">Mt Mall</h1>
       </router-link>
       <nav
-        class="flex flex-wrap items-center justify-around w-full mb-5 text-lg  md:mb-0 md:justify-center md:ml-auto md:w-auto"
+        class="
+          flex flex-wrap
+          items-center
+          justify-around
+          w-full
+          mb-5
+          text-lg
+          md:mb-0 md:justify-center md:ml-auto md:w-auto
+        "
       >
         <router-link
           class="px-1 font-bold md:px-5 text-primary clickable md:mr-5"
@@ -21,7 +36,7 @@
         </router-link>
 
         <router-link
-          v-if="!user.accessToken"
+          v-if="!user.token"
           class="px-1 font-bold md:px-5 text-primary clickable md:mr-5"
           :to="{ name: 'Login' }"
           >登入
@@ -30,7 +45,16 @@
         <template v-else>
           <router-link
             :to="{ name: 'OrderDetail' }"
-            class="flex items-center justify-start px-1 font-bold  md:mr-5 md:px-5 text-primary clickable"
+            class="
+              flex
+              items-center
+              justify-start
+              px-1
+              font-bold
+              md:mr-5 md:px-5
+              text-primary
+              clickable
+            "
           >
             <span>
               <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
@@ -53,7 +77,19 @@
       </nav>
       <button
         @click="$router.push({ name: 'Cart' })"
-        class="relative inline-flex items-center px-3 py-1 text-base border-0 rounded  focus:outline-none hover:bg-gray-200 md:mt-0"
+        class="
+          relative
+          inline-flex
+          items-center
+          px-3
+          py-1
+          text-base
+          border-0
+          rounded
+          focus:outline-none
+          hover:bg-gray-200
+          md:mt-0
+        "
       >
         <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24">
           <path
@@ -63,7 +99,19 @@
         </svg>
         <div
           v-if="cartCount > 0"
-          class="absolute flex items-center justify-center w-8 h-6 text-white rounded-full  -right-2 -top-4 bg-primary"
+          class="
+            absolute
+            flex
+            items-center
+            justify-center
+            w-8
+            h-6
+            text-white
+            rounded-full
+            -right-2
+            -top-4
+            bg-primary
+          "
         >
           {{ cartCount }}
         </div>

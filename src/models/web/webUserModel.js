@@ -72,6 +72,11 @@ webUserSchema.pre('save', async function (next) {
   next()
 })
 
+webUserSchema.virtual('order', {
+  ref: 'WebOrder',
+  localField: '_id',
+  foreignField: 'userId'
+})
 const User = mongoose.model('WebUser', webUserSchema)
 
 module.exports = User

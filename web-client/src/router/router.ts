@@ -78,7 +78,7 @@ router.beforeEach((to, from, next) => {
   ]
   const authRequired = privatePagesPath.includes(to.path)
 
-  const loggedIn = store.state.user.accessToken
+  const loggedIn = store.state.user.token
 
   if (authRequired && !loggedIn) {
     return next('/')

@@ -46,12 +46,12 @@
 
           <div
             v-for="cartItem in cartLists"
-            :key="cartItem.id"
+            :key="cartItem._id"
             class="flex items-center justify-start p-4"
           >
             <div
               class="w-1/2 pb-[50%] bg-no-repeat bg-center bg-cover"
-              :style="`background-image: url(${cartItem.image})`"
+              :style="`background-image: url(${appURL}${cartItem.image})`"
             ></div>
             <div class="w-1/2 p-4">
               <p class="mb-1 text-base font-light">
@@ -85,7 +85,8 @@ export default defineComponent({
       }, 0)
     })
 
-    return { cartLists, subTotal }
+    const appURL = import.meta.env.VITE_APP_URL as String
+    return { cartLists, subTotal, appURL }
   },
 })
 </script>

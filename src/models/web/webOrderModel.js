@@ -4,65 +4,9 @@ const dayjs = require('dayjs')
 
 const webOrderSchema = new mongoose.Schema(
   {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      trim: true,
-      ref: 'WebUser'
-    },
-    lastName: { type: String, required: true, trim: true },
-    firstName: { type: String, required: true, trim: true },
-    phone: {
-      type: String,
-      required: true,
-      trim: true,
-      validate(value) {
-        if (!validator.isMobilePhone(value, ['zh-TW'])) {
-          throw new Error('手機格式錯誤')
-        }
-      }
-    },
-    address: { type: String, required: true, trim: true },
-    cardLastName: { type: String, required: true, trim: true },
-    cardFirstName: { type: String, required: true, trim: true },
-    cardExpMonth: {
-      type: String,
-      required: true,
-      trim: true,
-      validate(value) {
-        if (value.length !== 2) throw new Error('月份需爲兩碼')
-        if (+value <= 0 || +value > 12) throw new Error('月份錯誤')
-      }
-    },
-    cardExpYear: {
-      type: String,
-      required: true,
-      trim: true,
-      validate(value) {
-        if (value.length !== 2) throw new Error('年份需爲兩碼')
-        if (+value < +dayjs().format('YY')) throw new Error('年份錯誤')
-      }
-    },
-    cardCvc: {
-      type: String,
-      required: true,
-      trim: true,
-      validate(value) {
-        if (value.length !== 3) throw new Error('安全碼需爲三碼')
-      }
-    },
-    cardNo: {
-      type: String,
-      required: true,
-      trim: true,
-      validate(value) {
-        if (value === '4000221111111111') return
-        if (!validator.isCreditCard(value)) throw new Error('卡號格式錯誤')
-      }
-    },
     cart: [
       {
-        id: {
+        _id: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
           ref: 'WebProduct'
@@ -70,9 +14,105 @@ const webOrderSchema = new mongoose.Schema(
         count: {
           type: Number,
           required: true
+        },
+        title: {
+          type: String,
+          required: true,
+          trim: true,
+          unique: true
+        },
+        price: {
+          type: Number,
+          require: true,
+          validate(value) {
+            if (value <= 0) {
+              throw new Error('價格需大於0')
+            }
+          }
+        },
+        description: {
+          type: String,
+          require: true
+        },
+        categoryId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: 'WebCategories'
+        },
+        category: {
+          type: String,
+          require: true
+        },
+        image: {
+          type: String
+        },
+        sales: {
+          type: Number,
+          default: 0
         }
       }
     ],
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      trim: true,
+      ref: 'WebUser'
+    },
+    purchaseInformation: {
+      address: { type: String, required: true, trim: true },
+      cardCvc: {
+        type: String,
+        required: true,
+        trim: true,
+        validate(value) {
+          if (value.length !== 3) throw new Error('安全碼需爲三碼')
+        }
+      },
+      cardExpMonth: {
+        type: String,
+        required: true,
+        trim: true,
+        validate(value) {
+          if (value.length !== 2) throw new Error('月份需爲兩碼')
+          if (+value <= 0 || +value > 12) throw new Error('月份錯誤')
+        }
+      },
+      cardExpYear: {
+        type: String,
+        required: true,
+        trim: true,
+        validate(value) {
+          if (value.length !== 2) throw new Error('年份需爲兩碼')
+          if (+value < +dayjs().format('YY')) throw new Error('年份錯誤')
+        }
+      },
+      cardLastName: { type: String, required: true, trim: true },
+      cardFirstName: { type: String, required: true, trim: true },
+      cardNo: {
+        type: String,
+        required: true,
+        trim: true,
+        validate(value) {
+          const number = value.replace(/-/g, '')
+
+          if (number === '4000221111111111') return
+          if (!validator.isCreditCard(number)) throw new Error('卡號格式錯誤')
+        }
+      },
+      firstName: { type: String, required: true, trim: true },
+      lastName: { type: String, required: true, trim: true },
+      phone: {
+        type: String,
+        required: true,
+        trim: true,
+        validate(value) {
+          const number = value.replace(/-/g, '')
+          if (!validator.isMobilePhone(number, ['zh-TW'])) {
+            throw new Error('手機格式錯誤')
+          }
+        }
+      }
+    },
     totalPrice: { type: Number, required: true },
     date: { type: String, required: true }
   },

@@ -1,7 +1,8 @@
 {
   "version": "0.0.0",
   "scripts": {
-    "dev": "npm run fake-db & vite --mode development",
+    "dev-fake-db": "npm run fake-db & vite --mode development",
+    "dev-mongodb": "vite --mode development-mongodb",
     "fake-db": "json-server --watch ./src/db/db.json --routes ./src/db/routes.json --delay 1500",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",

@@ -21,8 +21,8 @@ export const store = createStore<State>({
   state: {
     user: {
       name: '',
-      accessToken: '',
-      id: '',
+      token: '',
+      _id: '',
       email: '',
     },
     cart: [],
@@ -48,8 +48,8 @@ export const store = createStore<State>({
     clearUser(context) {
       context.commit('setUser', {
         name: '',
-        accessToken: '',
-        id: '',
+        token: '',
+        _id: '',
         email: '',
       })
     },

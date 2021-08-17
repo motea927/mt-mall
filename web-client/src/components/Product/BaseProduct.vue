@@ -2,27 +2,13 @@
   <div class="w-full p-4 md:w-1/3">
     <div
       @click="
-        $router.push({ name: 'ProductDetail', params: { id: product.id } })
+        $router.push({ name: 'ProductDetail', params: { id: product._id } })
       "
-      class="
-        flex flex-col
-        w-full
-        h-full
-        overflow-hidden
-        transition
-        duration-500
-        ease-in-out
-        rounded
-        hover:shadow-lg
-        hover:transform
-        hover:-translate-y-1
-        hover:scale-105
-        hover:cursor-pointer
-      "
+      class="flex flex-col w-full h-full overflow-hidden transition duration-500 ease-in-out rounded  hover:shadow-lg hover:transform hover:-translate-y-1 hover:scale-105 hover:cursor-pointer"
     >
       <div
-        class="object-cover pb-[95%] bg-cover bg-center bg-no-repeat"
-        :style="`background-image: url(${product.image});`"
+        class="object-cover pb-[95%] bg-cover bg-center bg-no-repeat border"
+        :style="`background-image: url(${appURL}${product.image});`"
       ></div>
       <div class="flex text-center">
         <p class="w-7/12 p-3 text-xl border-l">{{ product.title }}</p>
@@ -56,11 +42,12 @@ export default defineComponent({
     },
   },
   setup() {
+    const appURL = import.meta.env.VITE_APP_URL as String
     const store = useStore()
     const cartLists = computed(() => store.state.cart)
     const onClickAddCart = (product: ProductType) => {
       const item = cartLists.value.find(
-        (_product) => product.id === _product.id
+        (_product) => product._id === _product._id
       )
 
       if (!item) {
@@ -75,7 +62,7 @@ export default defineComponent({
       }
 
       const newCartLists = cartLists.value.map((_product) => {
-        if (_product.id !== product.id) return { ..._product }
+        if (_product._id !== product._id) return { ..._product }
         return {
           ..._product,
           count: _product.count + 1,
@@ -86,6 +73,7 @@ export default defineComponent({
 
     return {
       onClickAddCart,
+      appURL,
     }
   },
 })
