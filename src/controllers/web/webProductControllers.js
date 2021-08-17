@@ -58,9 +58,12 @@ module.exports = {
 
     try {
       const product = await Product.findById(req.params.id)
+
       if (!product) return res.status(404).send('未找到該商品')
       updates.forEach(update => (product[update] = req.body[update]))
+
       let originalImage = ''
+
       if (req.file) {
         originalImage = product.image
         product.image = `/uploads/${req.file.filename}`
@@ -77,10 +80,12 @@ module.exports = {
       }
       res.send(product)
     } catch (e) {
+      console.log(e)
       if (req.body.file) {
         await fs.unlink(
           path.join(__dirname, `../../uploads/${req.file.filename}`),
           err => {
+            console.log(err)
             if (err) return res.status(404).send()
           }
         )
