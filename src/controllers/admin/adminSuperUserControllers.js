@@ -49,6 +49,18 @@ module.exports = {
       res.status(400).send(e)
     }
   },
+  async getInfo(req, res, next) {
+    try {
+      const user = req.user
+      if (!user) {
+        res.status(404).send()
+        return
+      }
+      res.send(user)
+    } catch (e) {
+      res.status(400).send(e)
+    }
+  },
   async patch(req, res, next) {
     const updates = Object.keys(req.body)
     const allowUpdates = ['name', 'password']

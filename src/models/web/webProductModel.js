@@ -6,11 +6,12 @@ const webProductSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true
+      unique: true,
+      maxLength: 4
     },
     price: {
       type: Number,
-      require: true,
+      required: true,
       validate(value) {
         if (value <= 0) {
           throw new Error('價格需大於0')
@@ -19,7 +20,7 @@ const webProductSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      require: true
+      required: true
     },
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -27,8 +28,7 @@ const webProductSchema = new mongoose.Schema(
       ref: 'WebCategories'
     },
     category: {
-      type: String,
-      require: true
+      type: String
     },
     image: {
       type: String

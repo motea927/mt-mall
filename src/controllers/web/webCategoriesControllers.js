@@ -15,14 +15,32 @@ module.exports = {
       res.status(400).send(e)
     }
   },
-  async getAll(req, res, next) {
+  async getAllWithAdmin(req, res, next) {
     try {
       const categoryLists = await Categories.find({}, null, {
         limit: parseInt(req.query.limit),
         skip: parseInt(req.query.skip)
       })
-
+      const count = await Categories.countDocuments({})
+      res.header('Access-Control-Expose-Headers', 'x-total-count')
+      res.set('x-total-count', count)
       res.send(categoryLists)
+    } catch (e) {
+      res.status(400).send(e)
+    }
+  },
+  async getAllWithWebUser(req, res, next) {
+    try {
+      const categoryLists = await Categories.find({}, null, {
+        limit: parseInt(req.query.limit),
+        skip: parseInt(req.query.skip)
+      })
+      const allCategoryCount = await Categories.countDocuments({})
+
+      res.send([
+        { category: '所有商品', count: allCategoryCount },
+        ...categoryLists
+      ])
     } catch (e) {
       res.status(400).send(e)
     }
@@ -63,11 +81,10 @@ module.exports = {
       })
 
       for (const product of productLists) {
-        await fsPromises.unlink(
-          path.join(__dirname + '../../..') + product.image
-        )
+        await fsPromises
+          .unlink(path.join(__dirname + '../../..') + product.image)
+          .catch(e => {})
       }
-
       res.send(category)
     } catch (e) {
       res.status(500).send(e)

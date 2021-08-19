@@ -43,7 +43,10 @@ module.exports = {
         limit: parseInt(req.query.limit),
         skip: parseInt(req.query.skip)
       })
+      const count = await User.countDocuments({})
 
+      res.header('Access-Control-Expose-Headers', 'x-total-count')
+      res.set('x-total-count', count)
       res.send(userLists)
     } catch (e) {
       res.status(400).send(e)

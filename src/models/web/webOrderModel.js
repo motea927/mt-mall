@@ -63,41 +63,24 @@ const webOrderSchema = new mongoose.Schema(
       cardCvc: {
         type: String,
         required: true,
-        trim: true,
-        validate(value) {
-          if (value.length !== 3) throw new Error('安全碼需爲三碼')
-        }
+        trim: true
       },
       cardExpMonth: {
         type: String,
         required: true,
-        trim: true,
-        validate(value) {
-          if (value.length !== 2) throw new Error('月份需爲兩碼')
-          if (+value <= 0 || +value > 12) throw new Error('月份錯誤')
-        }
+        trim: true
       },
       cardExpYear: {
         type: String,
         required: true,
-        trim: true,
-        validate(value) {
-          if (value.length !== 2) throw new Error('年份需爲兩碼')
-          if (+value < +dayjs().format('YY')) throw new Error('年份錯誤')
-        }
+        trim: true
       },
       cardLastName: { type: String, required: true, trim: true },
       cardFirstName: { type: String, required: true, trim: true },
       cardNo: {
         type: String,
         required: true,
-        trim: true,
-        validate(value) {
-          const number = value.replace(/-/g, '')
-
-          if (number === '4000221111111111') return
-          if (!validator.isCreditCard(number)) throw new Error('卡號格式錯誤')
-        }
+        trim: true
       },
       firstName: { type: String, required: true, trim: true },
       lastName: { type: String, required: true, trim: true },

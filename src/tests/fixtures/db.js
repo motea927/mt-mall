@@ -34,6 +34,14 @@ const webCategoryOne = {
   isEnable: true
 }
 
+const webCategoryTwoId = new mongoose.Types.ObjectId()
+const webCategoryTwo = {
+  _id: webCategoryTwoId,
+  category: '拿鐵',
+  count: 0,
+  isEnable: true
+}
+
 const WebProduct = require('../../models/web/webProductModel')
 
 const webProductOneId = new mongoose.Types.ObjectId()
@@ -43,6 +51,16 @@ const webProductOne = {
   price: 500,
   description:
     '綿密奶泡上的楓糖氣息撲鼻而來，接著是濃醇的咖啡及牛奶香，慢慢品嘗、細細感受楓糖的香甜與拿鐵融合出的典雅細緻！',
+  categoryId: webCategoryOneId,
+  sales: 0
+}
+
+const webProductTwoId = new mongoose.Types.ObjectId()
+const webProductTwo = {
+  _id: webProductTwoId,
+  title: '草莓拿鐵',
+  price: 20,
+  description: '123',
   categoryId: webCategoryOneId,
   sales: 0
 }
@@ -66,6 +84,7 @@ const setupDatabase = async () => {
   // Web Categories
   await WebCategories.deleteMany()
   await new WebCategories(webCategoryOne).save()
+  await new WebCategories(webCategoryTwo).save()
 
   // Web Product
   const files = await fsPromises.readdir(
@@ -80,6 +99,7 @@ const setupDatabase = async () => {
 
   await WebProduct.deleteMany()
   await new WebProduct(webProductOne).save()
+  await new WebProduct(webProductTwo).save()
 
   // Web Order
   await WebOrder.deleteMany()
@@ -93,5 +113,10 @@ module.exports = {
   webUserOne,
   webCategoryOneId,
   webCategoryOne,
-  webProductOne
+  webCategoryTwoId,
+  webCategoryTwo,
+  webProductOneId,
+  webProductOne,
+  webProductTwoId,
+  webProductTwo
 }

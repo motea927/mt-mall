@@ -32,17 +32,26 @@ module.exports = {
     try {
       const page = req.query._page ? parseInt(req.query._page) - 1 : 0
       const sortParams = {}
+      const match = {}
+
       if (req.query._sort) {
         sortParams[req.query._sort] = req.query._order || 'desc'
       }
-      const productLists = await Product.find({}, null, {
-        limit: parseInt(req.query._limit),
-        skip: page
-      }).sort(sortParams)
 
+      if (req.query.category) {
+        match.category = req.query.category
+      }
+
+      const productLists = await Product.find(match, null, {
+        limit: parseInt(req.query._limit) || parseInt(req.query.limit),
+        skip: page || parseInt(req.query.skip)
+      }).sort(sortParams)
+      const count = await Product.countDocuments({})
+
+      res.header('Access-Control-Expose-Headers', 'x-total-count')
+      res.set('x-total-count', count)
       res.send(productLists)
     } catch (e) {
-      console.log(e)
       res.status(400).send(e)
     }
   },
@@ -86,12 +95,10 @@ module.exports = {
       }
       res.send(product)
     } catch (e) {
-      console.log(e)
       if (req.body.file) {
         await fs.unlink(
           path.join(__dirname, `../../uploads/${req.file.filename}`),
           err => {
-            console.log(err)
             if (err) return res.status(404).send()
           }
         )

@@ -35,7 +35,7 @@ export const getProducts = () => {
 
       const response = await webAPI.get('/product', { params: queryParams })
       count.value = +response.headers['x-total-count']
-
+      console.log(response)
       if (response.data.error) {
         throw Error(response.data.error)
       }
@@ -56,7 +56,7 @@ export const getCategories = () => {
       if (data.error) {
         throw Error(data.error)
       }
-      categories.value = data
+      categories.value = [...data]
     } catch (e) {
       error.value = e.response.data || e.message
     }

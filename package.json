@@ -6,7 +6,7 @@
   "scripts": {
     "start-db": "~/mongodb-4.4.6/bin/mongod --dbpath=/Users/mt/mongodb-data",
     "dev": "env-cmd -f ./config/dev.env nodemon ./src/app.js",
-    "test": "env-cmd -f ./config/test.env jest --watchAll --runInBand"
+    "test": "env-cmd -f ./config/test.env jest ./src/tests --watch --runInBand"
   },
   "author": "",
   "license": "ISC",
