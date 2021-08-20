@@ -1,6 +1,11 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="product" label-width="120px">
+    <el-form
+      v-loading="listLoading"
+      ref="form"
+      :model="product"
+      label-width="120px"
+    >
       <el-form-item
         label="商品名稱"
         prop="title"
@@ -123,7 +128,8 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
-      fileList: []
+      fileList: [],
+      listLoading: false
     }
   },
   computed: {
@@ -134,13 +140,10 @@ export default {
     }
   },
   created() {
-    console.log(this.isEditMode)
-
     if (this.isEditMode) {
       const product = this.$route.params.product
       if (!product) return this.$router.push({ name: 'ProductItemList' })
       this.product = product
-      console.log(product)
       this.fileList = [{ url: product.image }]
       this.dialogImageUrl = product.image
     }
@@ -148,7 +151,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.fileList)
       if (this.fileList[0]) {
         const image =
           this.isEditMode && !this.fileList[0].raw
@@ -161,8 +163,8 @@ export default {
       const formRef = this.$refs.form
       formRef.validate(isValidated => {
         if (!isValidated) return
+        this.listLoading = true
         if (this.isEditMode) {
-          console.log(this.product.image)
           const newProduct = {
             title: this.product.title,
             price: this.product.price,
@@ -170,7 +172,7 @@ export default {
             categoryId: this.product.categoryId,
             image: this.product.image
           }
-          console.log(newProduct)
+
           updateProductItemApi(newProduct, this.product._id)
             .then(response => {
               this.$message('更改成功!')
@@ -200,12 +202,14 @@ export default {
       this.goToProductItemList()
     },
     goToProductItemList() {
+      this.listLoading = false
       this.$router.push({ name: 'ProductItemList' })
     },
     fetchCategory() {
+      this.listLoading = true
       getProductCategoryApi().then(response => {
-        console.log(response)
         this.categoryLists = response.data
+        this.listLoading = false
       })
     },
     handleRemove(file) {
@@ -214,9 +218,6 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
-    },
-    handleDownload(file) {
-      console.log(file)
     },
     onChangeImage(file, fileList) {
       const isPNG = file.raw.type === 'image/png'

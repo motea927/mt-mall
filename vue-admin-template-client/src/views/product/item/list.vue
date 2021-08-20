@@ -134,10 +134,15 @@ export default {
         type: 'warning'
       })
         .then(() => {
+          this.listLoading = true
           return deleteProductItemApi(product._id)
         })
         .then(() => {
+          this.listLoading = false
           this.fetchData()
+        })
+        .catch(() => {
+          this.listLoading = false
         })
     },
     onClickAddProduct() {
