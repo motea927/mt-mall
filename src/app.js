@@ -39,16 +39,11 @@ app.use('/uploads/:fileName', (req, res, next) => {
   })
 })
 
-console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'production') {
   app.use('/admin-client', express.static('vue-admin-template-client/dist'))
   app.use(express.static('web-client/dist'))
   app.use(history())
 }
-
-app.use('/admin-client', express.static('vue-admin-template-client/dist'))
-app.use(history())
-app.use('/', express.static('web-client/dist'))
 
 if (process.env.mode !== 'test') {
   app.listen(port, () => console.log(`express listen on ${port}`))

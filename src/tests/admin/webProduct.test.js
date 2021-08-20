@@ -16,6 +16,7 @@ beforeEach(setupDatabase)
 
 // Admin CRUD APP Product
 
+// create
 test('Should create product with correct admin', async () => {
   const newProduct = {
     title: '測試商品',
@@ -94,11 +95,13 @@ test('Should not create product with long title', async () => {
     .expect(400)
 })
 
+// read
 test('Should get product lists', async () => {
   const response = await request(app).get('/admin/product').expect(200)
   expect(response.body.length).toBe(2)
 })
 
+// update
 test('Should update product with correct admin', async () => {
   const title = '新拿鐵'
   const newPrice = 999999
