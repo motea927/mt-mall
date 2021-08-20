@@ -1,9 +1,7 @@
 const mongoose = require('mongoose')
 const Categories = require('../../models/web/webCategoriesModel')
 const Product = require('../../models/web/webProductModel')
-const path = require('path')
-const fs = require('fs')
-const fsPromises = fs.promises
+const ImageModel = require('../../models/image')
 
 module.exports = {
   async create(req, res, next) {
@@ -95,9 +93,9 @@ module.exports = {
       })
 
       for (const product of productLists) {
-        await fsPromises
-          .unlink(path.join(__dirname + '../../..') + product.image)
-          .catch(e => {})
+        await ImageModel.findOneAndDelete({
+          fileName: product.image.replace('/uploads/', '')
+        })
       }
       res.send(category)
     } catch (e) {

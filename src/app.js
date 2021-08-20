@@ -25,19 +25,8 @@ app.use('/admin', adminRoutes)
 // APP API
 app.use('/web', webRoutes)
 
-app.use('/uploads/:fileName', (req, res, next) => {
-  const fileName = req.params.fileName
-  const filePath = path.join(__dirname, `./uploads/${fileName}`)
-
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      res.status(404).send()
-      return
-    }
-    res.set('Content-Type', 'image/png')
-    res.send(data)
-  })
-})
+const imageControllers = require('./controllers/imageControllers')
+app.use('/uploads/:fileName', imageControllers.getImage)
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/admin-client', express.static('vue-admin-template-client/dist'))
