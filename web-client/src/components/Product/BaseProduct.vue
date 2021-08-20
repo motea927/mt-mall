@@ -37,7 +37,7 @@ import ProductType from '/@/types/ProductType'
 export default defineComponent({
   props: {
     product: {
-      require: true,
+      required: true,
       type: Object as PropType<ProductType>,
     },
   },

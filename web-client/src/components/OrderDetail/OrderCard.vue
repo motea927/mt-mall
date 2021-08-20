@@ -90,6 +90,7 @@ export default defineComponent({
   props: {
     order: {
       type: Object as PropType<OrderType>,
+      required: true,
     },
   },
   components: { OrderCardItem },

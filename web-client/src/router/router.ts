@@ -65,6 +65,10 @@ export const router = createRouter({
       path: '/order-detail',
       component: () => import('/@/pages/OrderDetail.vue'),
     },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/',
+    },
   ],
 })
 

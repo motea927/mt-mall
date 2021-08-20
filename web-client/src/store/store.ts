@@ -57,6 +57,7 @@ export const store = createStore<State>({
   plugins: [
     createPersistedState({
       paths: ['user', 'cart'],
+      key: 'mtmall',
       storage: {
         getItem: (key) => ls.get(key),
         setItem: (key, value) => ls.set(key, value),

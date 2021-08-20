@@ -18,17 +18,17 @@ import { defineComponent, PropType } from '@vue/runtime-core'
 export default defineComponent({
   props: {
     showLeftBorder: {
-      require: false,
+      required: false,
       default: false,
       type: Boolean as PropType<boolean>,
     },
     text: {
-      require: true,
+      required: true,
       default: '&lsaquo;',
       type: String as PropType<string>,
     },
     isActive: {
-      require: true,
+      required: true,
       default: false,
       type: Boolean as PropType<boolean>,
     },

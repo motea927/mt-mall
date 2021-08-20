@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start-db": "~/mongodb-4.4.6/bin/mongod --dbpath=/Users/mt/mongodb-data",
+    "start": "node ./src/app.js",
     "dev": "env-cmd -f ./config/dev.env nodemon ./src/app.js",
-    "test": "env-cmd -f ./config/test.env jest ./src/tests --watch --runInBand"
+    "test": "env-cmd -f ./config/test.env jest ./src/tests --watch --runInBand",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix vue-admin-template-client && npm run build:prod --prefix vue-admin-template-client && npm install --prefix web-client && npm run build --prefix web-client"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.5",
     "dayjs": "^1.10.6",
     "express": "^4.17.1",

@@ -25,6 +25,7 @@ export default defineComponent({
   props: {
     cartItem: {
       type: Object as PropType<ProductType>,
+      required: true,
     },
   },
   setup() {

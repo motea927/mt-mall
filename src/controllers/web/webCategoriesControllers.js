@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Categories = require('../../models/web/webCategoriesModel')
 const Product = require('../../models/web/webProductModel')
 const path = require('path')
@@ -56,12 +57,25 @@ module.exports = {
 
     try {
       const category = await Categories.findById(req.params.id)
+      console.log(category)
       if (!category) return res.status(404).send('未找到該商品類別')
       updates.forEach(update => (category[update] = req.body[update]))
+
       await category.save()
+
+      if (updates.includes('category')) {
+        const productLists = await Product.find({
+          categoryId: new mongoose.Types.ObjectId(req.params.id)
+        })
+        for (let productItem of productLists) {
+          productItem.category = req.body.category
+          await productItem.save()
+        }
+      }
 
       res.send(category)
     } catch (e) {
+      console.log(e)
       res.status(404).send(e)
     }
   },

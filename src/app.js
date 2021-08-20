@@ -6,6 +6,7 @@ require('./db/mongoose')
 
 const adminRoutes = require('./routes/admin/adminRoutes')
 const webRoutes = require('./routes/web/webRoutes')
+const history = require('connect-history-api-fallback')
 
 const app = express()
 const port = process.env.PORT
@@ -37,6 +38,17 @@ app.use('/uploads/:fileName', (req, res, next) => {
     res.send(data)
   })
 })
+
+console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV === 'production') {
+  app.use('/admin-client', express.static('vue-admin-template-client/dist'))
+  app.use(express.static('web-client/dist'))
+  app.use(history())
+}
+
+app.use('/admin-client', express.static('vue-admin-template-client/dist'))
+app.use(history())
+app.use('/', express.static('web-client/dist'))
 
 if (process.env.mode !== 'test') {
   app.listen(port, () => console.log(`express listen on ${port}`))

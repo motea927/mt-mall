@@ -30,17 +30,17 @@ import BasePaginationItem from '/@/components/BasePaginationItem.vue'
 export default defineComponent({
   props: {
     total: {
-      require: true,
+      required: true,
       default: 25,
       type: Number as PropType<number>,
     },
     perPage: {
-      require: true,
+      required: true,
       default: 3,
       type: Number as PropType<number>,
     },
     modelValue: {
-      require: true,
+      required: true,
       default: 1,
       type: Number as PropType<number>,
     },

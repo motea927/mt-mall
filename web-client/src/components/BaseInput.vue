@@ -32,7 +32,7 @@ export default defineComponent({
       if (props.icon === 'name')
         return `background-image: url('/@/assets/img/BaseInput/Name.svg');`
     })
-    const onInput = (e: InputEvent) => {
+    const onInput = (e: Event) => {
       const inputEl = e.target as HTMLInputElement
       ctx.emit('update:modelValue', inputEl.value)
     }
