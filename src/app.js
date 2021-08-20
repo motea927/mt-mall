@@ -30,8 +30,8 @@ app.use('/uploads/:fileName', imageControllers.getImage)
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/admin-client', express.static('vue-admin-template-client/dist'))
-  app.use(express.static('web-client/dist'))
   app.use(history())
+  app.use(express.static('web-client/dist'))
 }
 
 if (process.env.mode !== 'test') {

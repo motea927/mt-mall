@@ -34,10 +34,10 @@ module.exports = {
         limit: parseInt(req.query.limit),
         skip: parseInt(req.query.skip)
       })
-      const allCategoryCount = await Categories.countDocuments({})
+      const allProductCount = await Product.countDocuments({})
 
       res.send([
-        { category: '所有商品', count: allCategoryCount },
+        { category: '所有商品', count: allProductCount },
         ...categoryLists
       ])
     } catch (e) {
@@ -55,7 +55,7 @@ module.exports = {
 
     try {
       const category = await Categories.findById(req.params.id)
-      console.log(category)
+
       if (!category) return res.status(404).send('未找到該商品類別')
       updates.forEach(update => (category[update] = req.body[update]))
 
@@ -73,7 +73,6 @@ module.exports = {
 
       res.send(category)
     } catch (e) {
-      console.log(e)
       res.status(404).send(e)
     }
   },
