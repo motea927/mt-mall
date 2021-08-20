@@ -89,8 +89,8 @@ export default {
     fetchData() {
       this.listLoading = true
       const params = {}
-      params.limit = this.pageSize
-      params.skip = this.currentPage - 1
+      params._limit = this.pageSize
+      params._skip = this.currentPage
       getOrderApi(params).then(response => {
         this.listCount = +response.headers['x-total-count']
         this.list = response.data

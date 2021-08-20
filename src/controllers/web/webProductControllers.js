@@ -27,7 +27,6 @@ module.exports = {
   },
   async getAll(req, res, next) {
     try {
-      const page = req.query._page ? parseInt(req.query._page) - 1 : 0
       const sortParams = {}
       const match = {}
 
@@ -43,10 +42,12 @@ module.exports = {
         match._id = new mongoose.Types.ObjectId(req.query._id)
       }
 
+      const page = req.query._page ? req.query._page - 1 : 0
       const productLists = await Product.find(match, null, {
-        limit: parseInt(req.query._limit) || parseInt(req.query.limit),
-        skip: page || parseInt(req.query.skip)
+        limit: parseInt(req.query._limit),
+        skip: parseInt(req.query._limit) * page
       }).sort(sortParams)
+
       const count = await Product.countDocuments(match)
 
       res.header('Access-Control-Expose-Headers', 'x-total-count')

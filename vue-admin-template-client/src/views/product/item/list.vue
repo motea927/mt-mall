@@ -110,8 +110,8 @@ export default {
       this.listLoading = true
 
       const params = {}
-      params.limit = this.pageSize
-      params.skip = this.currentPage - 1
+      params._limit = this.pageSize
+      params._page = this.currentPage
       getProductItemApi(params).then(response => {
         this.listCount = +response.headers['x-total-count']
         this.list = response.data.map(item => ({

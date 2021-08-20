@@ -84,9 +84,10 @@ module.exports = {
   },
   async getAllWithAdmin(req, res, next) {
     try {
+      const page = req.query._page ? req.query._page - 1 : 0
       const orderLists = await Order.find({}, null, {
-        limit: parseInt(req.query.limit),
-        skip: parseInt(req.query.skip)
+        limit: parseInt(req.query._limit),
+        skip: parseInt(req.query._limit) * page
       })
         .lean()
         .exec()

@@ -16,9 +16,10 @@ module.exports = {
   },
   async getAllWithAdmin(req, res, next) {
     try {
+      const page = req.query._page ? req.query._page - 1 : 0
       const categoryLists = await Categories.find({}, null, {
-        limit: parseInt(req.query.limit),
-        skip: parseInt(req.query.skip)
+        limit: parseInt(req.query._limit),
+        skip: parseInt(req.query._limit) * page
       })
       const count = await Categories.countDocuments({})
       res.header('Access-Control-Expose-Headers', 'x-total-count')
@@ -30,9 +31,10 @@ module.exports = {
   },
   async getAllWithWebUser(req, res, next) {
     try {
+      const page = req.query._page ? req.query._page - 1 : 0
       const categoryLists = await Categories.find({}, null, {
-        limit: parseInt(req.query.limit),
-        skip: parseInt(req.query.skip)
+        limit: parseInt(req.query._limit),
+        skip: parseInt(req.query._limit) * page
       })
       const allProductCount = await Product.countDocuments({})
 

@@ -39,9 +39,10 @@ module.exports = {
   },
   async getAllWithAdmin(req, res, next) {
     try {
+      const page = req.query._page ? req.query._page - 1 : 0
       const userLists = await User.find({}, null, {
-        limit: parseInt(req.query.limit),
-        skip: parseInt(req.query.skip)
+        limit: parseInt(req.query._limit),
+        skip: parseInt(req.query._limit) * page
       })
       const count = await User.countDocuments({})
 
