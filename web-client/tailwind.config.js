@@ -14,6 +14,10 @@ module.exports = {
       backgroundPosition: {
         'left-input': '1rem',
       },
+      screens: {
+        xl: null,
+        '2xl': null,
+      },
     },
   },
   variants: {

@@ -47,7 +47,7 @@ module.exports = {
         limit: parseInt(req.query._limit) || parseInt(req.query.limit),
         skip: page || parseInt(req.query.skip)
       }).sort(sortParams)
-      const count = await Product.countDocuments({})
+      const count = await Product.countDocuments(match)
 
       res.header('Access-Control-Expose-Headers', 'x-total-count')
       res.set('x-total-count', count)
