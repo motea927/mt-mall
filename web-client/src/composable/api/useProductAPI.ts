@@ -20,7 +20,7 @@ export const getProducts = () => {
       | 'category'
       | 'image'
       | 'sales'
-    id?: string
+    _id?: string
     _order?: 'asc' | 'desc'
     _limit?: number
     _page?: number
@@ -35,7 +35,7 @@ export const getProducts = () => {
 
       const response = await webAPI.get('/product', { params: queryParams })
       count.value = +response.headers['x-total-count']
-      console.log(response)
+
       if (response.data.error) {
         throw Error(response.data.error)
       }

@@ -65,13 +65,13 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const id = route.params._id as unknown as string
+    const id = route.params.id as unknown as string
 
     const { products, load: loadProduct } = getProducts()
 
     watchEffect(async () => {
       await loadProduct({
-        id,
+        _id: id,
       })
       if (products.value.length === 0) router.push({ name: 'Index' })
     })

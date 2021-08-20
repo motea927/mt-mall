@@ -39,6 +39,10 @@ module.exports = {
         match.category = req.query.category
       }
 
+      if (req.query._id) {
+        match._id = new mongoose.Types.ObjectId(req.query._id)
+      }
+
       const productLists = await Product.find(match, null, {
         limit: parseInt(req.query._limit) || parseInt(req.query.limit),
         skip: page || parseInt(req.query.skip)
