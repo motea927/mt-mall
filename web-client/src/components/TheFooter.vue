@@ -17,7 +17,9 @@
       <div class="flex flex-wrap">
         <div class="w-full mb-8 md:flex-1 md:mb-0">
           <a
-            href="https://github.com/motea927/mt-mall-f2e-vue"
+            href="https://github.com/motea927/mt-mall/tree/main/web-client"
+            target="_blank"
+            rel="noreferrer noopener"
             class="inline-block clickable"
           >
             <svg class="w-8 h-8" viewBox="0 0 24 24">
