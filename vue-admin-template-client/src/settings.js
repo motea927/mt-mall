@@ -1,6 +1,5 @@
 module.exports = {
-
-  title: 'Vue Admin Template',
+  title: 'Mt Mall 後臺管理系統',
 
   /**
    * @type {boolean} true | false
