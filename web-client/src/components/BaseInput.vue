@@ -11,6 +11,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@vue/runtime-core'
+import emailIcon from '/@/assets/img/BaseInput/Email.svg'
+import passwordIcon from '/@/assets/img/BaseInput/Password.svg'
+import nameIcon from '/@/assets/img/BaseInput/Name.svg'
 
 export default defineComponent({
   props: {
@@ -25,12 +28,10 @@ export default defineComponent({
   setup(props, ctx) {
     const style = computed(() => {
       if (!props.icon) return ''
-      if (props.icon === 'email')
-        return `background-image: url('/@/assets/img/BaseInput/Email.svg');`
+      if (props.icon === 'email') return `background-image: url(${emailIcon});`
       if (props.icon === 'password')
-        return `background-image: url('/@/assets/img/BaseInput/Password.svg');`
-      if (props.icon === 'name')
-        return `background-image: url('/@/assets/img/BaseInput/Name.svg');`
+        return `background-image: url(${passwordIcon});`
+      if (props.icon === 'name') return `background-image: url(${nameIcon});`
     })
     const onInput = (e: Event) => {
       const inputEl = e.target as HTMLInputElement

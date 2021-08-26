@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="user" label-width="120px">
+    <el-form v-loading="isLoading" ref="form" :model="user" label-width="120px">
       <el-form-item
         label="會員暱稱"
         prop="name"
@@ -38,7 +38,8 @@ export default {
       user: {
         name: '',
         password: ''
-      }
+      },
+      isLoading: false
     }
   },
   created() {
@@ -51,6 +52,7 @@ export default {
       const formRef = this.$refs.form
       formRef.validate(isValidated => {
         if (!isValidated) return
+        this.isLoading = true
         const updateData = {}
         updateData.name = this.user.name
         if (this.user.password) {
@@ -62,6 +64,7 @@ export default {
             this.goToWebUserList()
           })
           .catch(err => {
+            this.isLoading = false
             console.log(err)
           })
       })
@@ -74,6 +77,7 @@ export default {
       this.goToWebUserList()
     },
     goToWebUserList() {
+      this.isLoading = false
       this.$router.push({ name: 'WebUserList' })
     }
   }

@@ -1,6 +1,11 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="category" label-width="120px">
+    <el-form
+      v-loading="isLoading"
+      ref="form"
+      :model="category"
+      label-width="120px"
+    >
       <el-form-item
         label="類別名稱"
         prop="category"
@@ -29,20 +34,11 @@ import { addProductCategoryApi } from '@/api/product'
 export default {
   data() {
     return {
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
       category: {
         category: '',
         isEnable: true
-      }
+      },
+      isLoading: false
     }
   },
   methods: {
@@ -50,12 +46,14 @@ export default {
       const formRef = this.$refs.form
       formRef.validate(isValidated => {
         if (!isValidated) return
+        this.isLoading = true
         addProductCategoryApi(this.category)
           .then(response => {
             this.$message('新增成功!')
             this.goToProductCategoryList()
           })
           .catch(err => {
+            this.isLoading = false
             console.log(err)
           })
       })
@@ -68,6 +66,7 @@ export default {
       this.goToProductCategoryList()
     },
     goToProductCategoryList() {
+      this.isLoading = false
       this.$router.push({ name: 'ProductCategoryList' })
     }
   }

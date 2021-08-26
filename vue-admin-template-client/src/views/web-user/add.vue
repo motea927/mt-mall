@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="user" label-width="120px">
+    <el-form v-loading="isLoading" ref="form" :model="user" label-width="120px">
       <el-form-item
         label="會員暱稱"
         prop="name"
@@ -55,7 +55,8 @@ export default {
         name: '',
         email: '',
         password: ''
-      }
+      },
+      isLoading: false
     }
   },
   methods: {
@@ -64,12 +65,14 @@ export default {
       formRef.validate(isValidated => {
         if (!isValidated) return
 
+        this.isLoading = true
         createWebUserApi(this.user)
           .then(response => {
             this.$message('新增成功!')
             this.goToWebUserList()
           })
           .catch(err => {
+            this.isLoading = false
             console.log(err)
           })
       })
@@ -82,6 +85,7 @@ export default {
       this.goToWebUserList()
     },
     goToWebUserList() {
+      this.isLoading = false
       this.$router.push({ name: 'WebUserList' })
     }
   }

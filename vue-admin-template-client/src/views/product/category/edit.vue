@@ -1,6 +1,11 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="category" label-width="120px">
+    <el-form
+      v-loading="isLoading"
+      ref="form"
+      :model="category"
+      label-width="120px"
+    >
       <el-form-item
         label="類別名稱"
         prop="category"
@@ -32,7 +37,8 @@ export default {
       category: {
         category: '',
         isEnable: true
-      }
+      },
+      isLoading: false
     }
   },
   created() {
@@ -46,7 +52,7 @@ export default {
       const formRef = this.$refs.form
       formRef.validate(isValidated => {
         if (!isValidated) return
-
+        this.isLoading = true
         const category = {
           category: this.category.category,
           isEnable: this.category.isEnable
@@ -58,6 +64,7 @@ export default {
             this.goToProductCategoryList()
           })
           .catch(err => {
+            this.isLoading = false
             console.log(err)
           })
       })
@@ -70,6 +77,7 @@ export default {
       this.goToProductCategoryList()
     },
     goToProductCategoryList() {
+      this.isLoading = false
       this.$router.push({ name: 'ProductCategoryList' })
     }
   }
