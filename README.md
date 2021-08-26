@@ -4,10 +4,11 @@ mt-mall 是一套微電商系統，包含[後端伺服、API](https://github.com
 
 系統主要包含商品系統、購物車系統、訂單系統、使用 JWT 做認證之會員中心等，API 使用 REST API 架構，本頁面主要以整個系統架構做說明。
 
+Live demo: https://mt-mall.herokuapp.com/
+
 ![image](https://raw.githubusercontent.com/motea927/mt-mall/main/demoImg/demo.png)
 
-Live demo: https://mt-mall.herokuapp.com/
-## 目錄結構
+## 目錄結構
 
 ```
 .
@@ -22,6 +23,7 @@ Live demo: https://mt-mall.herokuapp.com/
 [前端商城應用](https://github.com/motea927/mt-mall/tree/main/web-client)
 
 - Vue 3 With Composition API
+- Typescript
 - Vite
 - Vuex
 - Vue Router

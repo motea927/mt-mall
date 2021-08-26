@@ -3,6 +3,7 @@ const app = require('../../app')
 const path = require('path')
 
 const webProductModel = require('../../models/web/webProductModel')
+const CategoryModel = require('../../models/web/webCategoriesModel')
 
 const {
   setupDatabase,
@@ -105,6 +106,9 @@ test('Should get product lists', async () => {
 test('Should update product with correct admin', async () => {
   const title = '新拿鐵'
   const newPrice = 999999
+  const product = await webProductModel.findById(webProductOneId)
+  const category = await CategoryModel.findById(webProductOne.categoryId)
+
   const response = await request(app)
     .patch(`/admin/product/${webProductOneId}`)
     .set('Authorization', `Bearer ${adminUserOne.token}`)
@@ -149,6 +153,7 @@ test('Should delete product with correct admin', async () => {
     .delete(`/admin/product/${webProductOneId}`)
     .set('Authorization', `Bearer ${adminUserOne.token}`)
     .expect(200)
+
   const deletedProduct = await webProductModel.findById(webProductOneId)
 
   expect(deletedProduct).toBeNull()

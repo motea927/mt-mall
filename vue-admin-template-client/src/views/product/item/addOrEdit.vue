@@ -10,7 +10,8 @@
         label="商品名稱"
         prop="title"
         :rules="[
-          { required: true, message: '請輸入商品名稱', trigger: 'blur' }
+          { required: true, message: '請輸入商品名稱', trigger: 'blur' },
+          { max: 4, message: '商品名稱爲四字以內', trigger: ['blur', 'change'] }
         ]"
       >
         <el-input v-model="product.title" />

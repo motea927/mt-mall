@@ -11,6 +11,12 @@ const webCategoriesSchema = new mongoose.Schema(
   }
 )
 
+webCategoriesSchema.virtual('product', {
+  ref: 'WebProduct',
+  localField: '_id',
+  foreignField: 'categoryId'
+})
+
 const Categories = mongoose.model('WebCategories', webCategoriesSchema)
 
 module.exports = Categories

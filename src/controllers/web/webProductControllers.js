@@ -10,7 +10,10 @@ module.exports = {
       const product = new Product(req.body)
       const categoryId = req.body.categoryId
       const category = await Category.findById(categoryId)
+
       product.category = category.category
+      product.isEnable = category.isEnable
+
       await product.save()
       category.count++
       await category.save()
@@ -25,10 +28,45 @@ module.exports = {
       res.status(400).send(e)
     }
   },
-  async getAll(req, res, next) {
+  async getAllWithAdmin(req, res, next) {
     try {
       const sortParams = {}
+
+      if (req.query._sort) {
+        sortParams[req.query._sort] = req.query._order || 'desc'
+      }
+
       const match = {}
+      if (req.query.category) {
+        match.category = req.query.category
+      }
+
+      if (req.query._id) {
+        match._id = new mongoose.Types.ObjectId(req.query._id)
+      }
+
+      const page = req.query._page ? req.query._page - 1 : 0
+
+      const productLists = await Product.find(match, null, {
+        limit: parseInt(req.query._limit),
+        skip: parseInt(req.query._limit) * page
+      }).sort(sortParams)
+
+      const count = await Product.countDocuments(match)
+
+      res.header('Access-Control-Expose-Headers', 'x-total-count')
+      res.set('x-total-count', count)
+      res.send(productLists)
+    } catch (e) {
+      res.status(400).send(e)
+    }
+  },
+  async getAllWithWeb(req, res, next) {
+    try {
+      const sortParams = {}
+      const match = {
+        isEnable: true
+      }
 
       if (req.query._sort) {
         sortParams[req.query._sort] = req.query._order || 'desc'
@@ -43,10 +81,13 @@ module.exports = {
       }
 
       const page = req.query._page ? req.query._page - 1 : 0
+
       const productLists = await Product.find(match, null, {
         limit: parseInt(req.query._limit),
         skip: parseInt(req.query._limit) * page
-      }).sort(sortParams)
+      })
+        .populate('categoryId')
+        .sort(sortParams)
 
       const count = await Product.countDocuments(match)
 
@@ -75,10 +116,24 @@ module.exports = {
 
     try {
       const product = await Product.findById(req.params.id)
+      const oldCategoryId = product.categoryId
 
       if (!product) return res.status(404).send('未找到該商品')
       const oldFileName = product.image.replace('/uploads/', '')
       updates.forEach(update => (product[update] = req.body[update]))
+
+      if (req.body.categoryId && req.body.categoryId !== oldCategoryId) {
+        const newCategory = await Category.findById(req.body.categoryId)
+        if (!newCategory) return res.status(404).send('未找到該商品類別')
+        const oldCategory = await Category.findById(oldCategoryId)
+        oldCategory.count--
+        newCategory.count++
+
+        await oldCategory.save()
+        await newCategory.save()
+        product.category = newCategory.category
+        product.isEnable = newCategory.isEnable
+      }
 
       let image
       if (req.file) {
@@ -121,6 +176,7 @@ module.exports = {
 
       res.send(product)
     } catch (e) {
+      console.log(e)
       res.status(500).send(e)
     }
   }

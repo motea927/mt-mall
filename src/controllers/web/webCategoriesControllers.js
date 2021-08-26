@@ -32,11 +32,22 @@ module.exports = {
   async getAllWithWebUser(req, res, next) {
     try {
       const page = req.query._page ? req.query._page - 1 : 0
-      const categoryLists = await Categories.find({}, null, {
-        limit: parseInt(req.query._limit),
-        skip: parseInt(req.query._limit) * page
+      const categoryLists = await Categories.find(
+        {
+          isEnable: true,
+          count: {
+            $gte: 1
+          }
+        },
+        null,
+        {
+          limit: parseInt(req.query._limit),
+          skip: parseInt(req.query._limit) * page
+        }
+      )
+      const allProductCount = await Product.countDocuments({
+        isEnable: true
       })
-      const allProductCount = await Product.countDocuments({})
 
       res.send([
         { category: '所有商品', count: allProductCount },
@@ -63,12 +74,19 @@ module.exports = {
 
       await category.save()
 
-      if (updates.includes('category')) {
+      if (updates.includes('category') || updates.includes('isEnable')) {
         const productLists = await Product.find({
           categoryId: new mongoose.Types.ObjectId(req.params.id)
         })
+        const reqCategory = req.body.category
+        const reqIsEnable = req.body.isEnable
+
         for (let productItem of productLists) {
-          productItem.category = req.body.category
+          productItem.category = reqCategory || category.category
+          productItem.isEnable =
+            reqIsEnable || reqIsEnable === false
+              ? reqIsEnable
+              : category.isEnable
           await productItem.save()
         }
       }

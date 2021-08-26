@@ -1,32 +1,43 @@
-# Vue 3 + Typescript + Vite
+# :art: mt-mall-frontend
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
+Demo：https://mt-mall.herokuapp.com/
 
-## Recommended IDE Setup
+基於 **Vue 3** 所製作，爲一個微電商系統，系統主要包含商品系統、購物車系統、訂單系統、使用 JWT 做認證之會員中心等，API 使用 REST API 架構
 
-[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
+![image](https://raw.githubusercontent.com/motea927/mt-mall/main/demoImg/demo.png)
 
-### If Using `<script setup>`
+## :page_facing_up: 技術
 
-[`<script setup>`](https://github.com/vuejs/rfcs/pull/227) is a feature that is currently in RFC stage. To get proper IDE support for the syntax, use [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) instead of Vetur (and disable Vetur).
+- **Vue 3**：前端 MVVM 框架，搭配 Composition API 進行開發
+- **Vue Router**：路由狀態管理
+- **Vuex**：Vue 狀態管理
+- **TypeScript**：JavaScript 的嚴格超集，提供靜態型別、類型推斷等功能
+- **Vite**：新一代 Vue build tool & dev server
+- **Tailwind CSS**：新一代工具類 CSS 框架
+- **Prettier**：程式碼格式化工具
+- **Axios**： Promise Based HTTP Request 工具
+- **Maska**： Input Mask 工具
+- **JSON Server**： Fake REST API Server，用於初期開發切版，達成前後端開發分離
+- **vuex-persistedstate**： Vuex 狀態持久化
+- **secure-ls**： LocalStorage 加密、壓縮工具
+- **SweetAlert2**： Popup UI 框架
 
-## Type Support For `.vue` Imports in TS
+## :coffee: 本地開發方式
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
+- dev-fake-db，本地開發並使用 JSON Server，不需依賴本專案之後端及資料庫，主要用於初期畫面切版，搭配前端根目錄下 .env.development 環境變數使用。
 
-### If Using Volar
+```bash
+#  dev-fake-db
+$ npm run dev-fake-db
+```
 
-Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
+- dev-mongodb，搭配本專案後端使用，需先 RUN 起後端環境，參考[後端目錄](https://github.com/motea927/mt-mall/tree/main/src)，搭配前端根目錄下 .env.development-mongodb 環境變數使用。
 
-### If Using Vetur
+```bash
+# dev-mongodb
+$ npm run dev-mongodb
+```
 
-1. Install and add `@vuedx/typescript-plugin-vue` to the [plugins section](https://www.typescriptlang.org/tsconfig#plugins) in `tsconfig.json`
-2. Delete `src/shims-vue.d.ts` as it is no longer needed to provide module info to Typescript
-3. Open `src/main.ts` in VSCode
-4. Open the VSCode command palette
-5. Search and run "Select TypeScript version" -> "Use workspace version"
+## 參考資源
 
-# mt-mall-f2e-vue
-
-Banner: https://picjumbo.com/two-fresh-lemon-drinks/
-UI Reference: https://xd.adobe.com/spec/934efdb7-a7e4-47d5-572e-efece0914f62-e57f/screen/a91298a6-689f-4b38-8821-b6840ec64910/
+- 整體 UI Reference: https://xd.adobe.com/spec/934efdb7-a7e4-47d5-572e-efece0914f62-e57f/screen/a91298a6-689f-4b38-8821-b6840ec64910/

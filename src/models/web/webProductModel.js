@@ -30,6 +30,9 @@ const webProductSchema = new mongoose.Schema(
     category: {
       type: String
     },
+    isEnable: {
+      type: Boolean
+    },
     image: {
       type: String
     },

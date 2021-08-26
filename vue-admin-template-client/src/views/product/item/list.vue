@@ -43,7 +43,10 @@
 
       <el-table-column align="center" label="商品類別">
         <template slot-scope="scope">
-          {{ scope.row.category }}
+          <p>{{ scope.row.category }}</p>
+          <el-tag :type="scope.row.isEnable ? 'success' : 'danger'">{{
+            scope.row.isEnable ? '啓用中' : '禁用中'
+          }}</el-tag>
         </template>
       </el-table-column>
 
@@ -53,7 +56,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" width="145px">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
             >編輯</el-button

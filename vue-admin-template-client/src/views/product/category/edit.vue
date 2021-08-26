@@ -54,7 +54,6 @@ export default {
 
         updateProductCategoryApi(category, this.category._id)
           .then(response => {
-            console.log(response)
             this.$message('修改成功!')
             this.goToProductCategoryList()
           })

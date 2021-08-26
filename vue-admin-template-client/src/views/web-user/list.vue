@@ -112,7 +112,6 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          console.log(user)
           return deleteWebUserApi(user._id)
         })
         .then(() => {

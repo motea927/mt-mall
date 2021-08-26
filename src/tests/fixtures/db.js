@@ -1,10 +1,9 @@
 const mongoose = require('mongoose')
 const fs = require('fs')
-const fsPromises = fs.promises
-const path = require('path')
-const request = require('supertest')
-const app = require('../../app')
+const fsPromise = fs.promises
 
+const path = require('path')
+const ImageModel = require('../../models/image')
 const AdminUser = require('../../models/admin/adminSuperUserModel')
 const adminUserOneId = new mongoose.Types.ObjectId()
 const adminUserOne = {
@@ -45,6 +44,7 @@ const webCategoryTwo = {
 const WebProduct = require('../../models/web/webProductModel')
 
 const webProductOneId = new mongoose.Types.ObjectId()
+
 const webProductOne = {
   _id: webProductOneId,
   title: '楓糖拿鐵',
@@ -52,7 +52,9 @@ const webProductOne = {
   description:
     '綿密奶泡上的楓糖氣息撲鼻而來，接著是濃醇的咖啡及牛奶香，慢慢品嘗、細細感受楓糖的香甜與拿鐵融合出的典雅細緻！',
   categoryId: webCategoryOneId,
-  sales: 0
+  isEnable: webCategoryOne.isEnable,
+  sales: 0,
+  image: '/uploads/gg1'
 }
 
 const webProductTwoId = new mongoose.Types.ObjectId()
@@ -62,7 +64,9 @@ const webProductTwo = {
   price: 20,
   description: '123',
   categoryId: webCategoryOneId,
-  sales: 0
+  isEnable: webCategoryOne.isEnable,
+  sales: 0,
+  image: '/uploads/gg2'
 }
 
 const WebOrder = require('../../models/web/webOrderModel')
@@ -83,21 +87,28 @@ const setupDatabase = async () => {
 
   // Web Categories
   await WebCategories.deleteMany()
+  // const image = await new ImageModel({
+  //   fileName: fileName,
+  //   image: req.file.buffer
+  // })
+
   await new WebCategories(webCategoryOne).save()
   await new WebCategories(webCategoryTwo).save()
 
   // Web Product
-  const files = await fsPromises.readdir(
-    path.join(__dirname + '../../../uploads/')
-  )
-
-  for (const file of files) {
-    await fsPromises.unlink(
-      path.join(path.join(__dirname + '../../../uploads/'), file)
-    )
-  }
-
+  await ImageModel.deleteMany()
   await WebProduct.deleteMany()
+  const imageBuffer = await fsPromise.readFile(path.join(__dirname, './gg.png'))
+  await new ImageModel({
+    fileName: 'gg1',
+    image: imageBuffer
+  }).save()
+
+  await new ImageModel({
+    fileName: 'gg2',
+    image: imageBuffer
+  }).save()
+
   await new WebProduct(webProductOne).save()
   await new WebProduct(webProductTwo).save()
 
