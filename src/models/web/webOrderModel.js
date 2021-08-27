@@ -18,8 +18,7 @@ const webOrderSchema = new mongoose.Schema(
         title: {
           type: String,
           required: true,
-          trim: true,
-          unique: true
+          trim: true
         },
         price: {
           type: Number,
