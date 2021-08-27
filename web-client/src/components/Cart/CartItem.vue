@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-wrap items-center justify-between py-5 md:flex-nowrap">
     <div
-      class="w-1/2 bg-center bg-no-repeat bg-cover md:w-28 h-28"
+      class="w-1/2 bg-center bg-no-repeat bg-contain md:bg-cover md:w-28 h-28"
       :style="`background-image: url('${appURL}${cart.image}')`"
     ></div>
 
